@@ -6,75 +6,133 @@
     <title>Racing-Luxe</title>
     <style>
         :root {
-            --bg-color: #f5f5f7;
-            --text-primary: #1d1d1f;
-            --text-secondary: #6e6e73;
-            --border-color: #d2d2d7;
-            --accent-blue: #0071e3;
-            --card-bg: #ffffff;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #2a2a2a;
+            --accent-red: #ff0844;
+            --accent-red-glow: rgba(255, 8, 68, 0.3);
+            --accent-dark-red: #cc0033;
+            --gradient-start: #ff0844;
+            --gradient-end: #ffb199;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         html, body {
             margin: 0;
-            background-color: var(--bg-color);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0f 50%, #0a0a0a 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1440px;
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
         }
 
         .header {
-            padding: 60px 0;
+            padding: 80px 0 60px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-red-glow) 0%, transparent 70%);
+            pointer-events: none;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
         }
 
         .header h1 {
             margin: 0;
-            font-size: 56px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px var(--accent-red-glow);
+            position: relative;
+            z-index: 1;
         }
 
         .header p {
-            margin: 16px 0 0;
-            font-size: 21px;
+            margin: 20px 0 0;
+            font-size: 18px;
             color: var(--text-secondary);
-            max-width: 580px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.4;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
         
         .main-panel {
-            background-color: var(--card-bg);
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 32px;
+            border-radius: 24px;
+            padding: 40px;
             margin-bottom: 40px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        0 0 0 1px rgba(255, 8, 68, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .main-panel:hover {
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
+                        0 0 0 1px rgba(255, 8, 68, 0.3);
+            transform: translateY(-2px);
         }
 
         .panel-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0 0 24px 0;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 32px 0;
             padding-bottom: 24px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+            background: linear-gradient(90deg, var(--accent-red), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .controls {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             align-items: center;
             flex-wrap: wrap;
-            padding-bottom: 24px;
+            padding-bottom: 28px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
 
         .controls.no-border {
@@ -84,36 +142,85 @@
 
         .controls .car-selectors {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             flex-grow: 1;
         }
+        
         .controls .car-selectors select {
-             width: 100%;
+            width: 100%;
         }
+        
         .controls .settings {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             align-items: center;
             margin-left: auto;
         }
 
         select, button {
-            background-color: var(--bg-color);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             border: 1px solid var(--border-color);
-            border-radius: 9999px;
-            padding: 8px 16px;
+            border-radius: 12px;
+            padding: 12px 20px;
             font-size: 14px;
             font-family: inherit;
             color: var(--text-primary);
             cursor: pointer;
-        }
-        button {
-            background-color: var(--accent-blue);
-            color: white;
-            border-color: transparent;
+            transition: all 0.3s ease;
             font-weight: 500;
         }
-        label { font-size: 14px; color: var(--text-secondary); }
+
+        select:hover, select:focus {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px var(--accent-red-glow);
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-dark-red) 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:hover {
+            box-shadow: 0 0 30px var(--accent-red-glow);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        label { 
+            font-size: 14px; 
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         .visualization-area {
             display: flex;
@@ -122,43 +229,172 @@
         }
 
         .race-view { flex: 3; }
-        .info-view { flex: 2; display: flex; flex-direction: column; gap: 16px; }
-        .info-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-content { display: flex; gap: 16px; align-items: center; flex-grow: 1; }
+        .info-view { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+        
+        .info-card { 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1f 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-red), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--accent-red);
+            box-shadow: 0 8px 24px var(--accent-red-glow);
+            transform: translateY(-4px);
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-content { display: flex; gap: 20px; align-items: center; flex-grow: 1; }
         .gauge-container { width: 180px; height: 180px; flex-shrink: 0; }
-        .info-text { line-height: 1.6; }
-        .info-text h3 { margin: 0 0 12px 0; font-size: 17px; font-weight: 600; }
-        .info-text p { margin: 4px 0; font-size: 14px; color: var(--text-secondary); }
-        .info-text p strong { color: var(--text-primary); font-weight: 500; }
+        .info-text { line-height: 1.8; }
+        .info-text h3 { 
+            margin: 0 0 16px 0; 
+            font-size: 18px; 
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+        .info-text p { 
+            margin: 8px 0; 
+            font-size: 14px; 
+            color: var(--text-secondary);
+        }
+        .info-text p strong { 
+            color: var(--accent-red); 
+            font-weight: 600;
+        }
 
         .scatterplot-container {
             height: 500px;
             width: 100%;
+            position: relative;
         }
+
         .tooltip {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(42, 26, 31, 0.98) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 16px 20px;
             font-size: 13px;
             color: var(--text-primary);
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.2s ease;
-            white-space: nowrap;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                        0 0 20px var(--accent-red-glow);
             z-index: 1000;
+            min-width: 220px;
         }
-        .axis line, .axis path { stroke: var(--border-color); }
-        .axis text { fill: var(--text-secondary); }
-        .axis-label { font-size: 14px; fill: var(--text-secondary); }
+
+        .tooltip strong {
+            color: var(--accent-red);
+            font-size: 15px;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .axis line, .axis path { 
+            stroke: var(--border-color);
+            stroke-width: 1.5;
+        }
+        
+        .axis text { 
+            fill: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .axis-label { 
+            font-size: 14px; 
+            fill: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dot {
+            transition: all 0.2s ease;
+            filter: drop-shadow(0 0 4px rgba(255, 8, 68, 0.3));
+        }
+
+        .dot:hover {
+            filter: drop-shadow(0 0 12px rgba(255, 8, 68, 0.8));
+        }
 
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 60px 30px 40px;
             font-size: 14px;
             color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-red), var(--accent-dark-red));
+            border-radius: 6px;
+            border: 2px solid var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-red);
+        }
+
+        /* 添加微妙的网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 8, 68, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 8, 68, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
         }
 
     </style>
@@ -166,13 +402,13 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>Racing-Luxe</h1>
+            <h1>RACING-LUXE</h1>
             <p>An interactive dashboard to compare the performance and specifications of luxury and high-performance vehicles.</p>
         </header>
 
         <!-- Market Explorer Panel -->
         <section class="main-panel">
-            <h2 class="panel-title">Market Explorer</h2>
+            <h2 class="panel-title">MARKET EXPLORER</h2>
             <div class="controls no-border">
                 <label for="seatFilter">Filter by Seats:</label>
                 <select id="seatFilter"></select>
@@ -184,7 +420,7 @@
 
         <!-- Head-to-Head Comparison Panel -->
         <main class="main-panel">
-            <h2 class="panel-title">Head-to-Head Comparison</h2>
+            <h2 class="panel-title">HEAD-TO-HEAD COMPARISON</h2>
             <div class="controls">
                 <div class="car-selectors">
                     <select id="carSel1"></select>
@@ -209,7 +445,7 @@
         </main>
 
         <footer>
-            Data Visualization by Yansong Zhu, Yichen Fan, Fanke Qin
+            DATA VISUALIZATION BY YANSONG ZHU, YICHEN FAN, FANKE QIN
         </footer>
     </div>
 

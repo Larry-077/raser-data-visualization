@@ -3,7 +3,7 @@ const keyOf = d => `${d.brand}__${d.model}`;
 const fmtK = x => !isFinite(x) ? '—' : (x >= 1e3 ? (x / 1e3).toFixed(0) + 'k' : String(Math.round(x || 0)));
 
 // --- 数据加载 ---
-const CSV_PATH = 'Cars Datasets 2025 1.csv';
+const CSV_PATH = 'Cars Datasets 2025.csv';
 
 const parseRow = (d) => {
     const num = (v) => {
