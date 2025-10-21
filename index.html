@@ -3,78 +3,219 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Racing-Luxe Cars — Interactive Visualizations (CSC316)</title>
+    <title>Racing-Luxe</title>
     <style>
-        :root{ --bg:#0a0b0d; --ink:#f3f3f3; --muted:#c9c9c9; --panel:rgba(16,18,22,.65);
-            --red:#ff2a3d; --amber:#ffb74d; --silver:#c8d0d7; --blue:#66ccff; --green:#8ee388; }
-        html,body{height:100%}
-        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--ink);
-            background: radial-gradient(1200px 800px at 55% 45%, #1b0f12 0%, #0c0d10 60%, #000 100%),
-            linear-gradient(135deg, rgba(255,42,61,.08), rgba(102,204,255,.05));}
-        .topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;gap:12px;border-bottom:1px solid rgba(255,255,255,.08);
-            background:linear-gradient(180deg, rgba(255,42,61,.14), rgba(255,42,61,0));}
-        .brand{font-weight:800;letter-spacing:.4px}
-        .nav{display:flex;gap:8px}
-        .nav a{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid rgba(255,255,255,.16);border-radius:12px;text-decoration:none;color:#fff;background:var(--panel)}
-        .nav a.active{border-color:rgba(255,42,61,.8);box-shadow:0 0 0 2px rgba(255,42,61,.18) inset}
-        .wrap{height:calc(100vh - 56px);display:grid;place-items:center}
-        section{width:100%;height:100%;display:none;position:relative}
-        section.active{display:grid;place-items:center}
-        svg{max-width:min(96vw,1280px);max-height:82vh;overflow:visible}
-        .panel{position:absolute;right:16px;top:72px;display:flex;gap:8px;align-items:center;padding:8px 10px;background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:12px}
-        select,button{background:#15181d;color:#fff;border:1px solid #2a2f35;border-radius:10px;padding:6px 10px;font-size:12px}
-        button{cursor:pointer}
+        :root {
+            --bg-color: #f5f5f7;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --border-color: #d2d2d7;
+            --accent-blue: #0071e3;
+            --card-bg: #ffffff;
+        }
+
+        html, body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 56px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            margin: 16px 0 0;
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+        
+        .main-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .panel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 24px 0;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .controls.no-border {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .controls .car-selectors {
+            display: flex;
+            gap: 12px;
+            flex-grow: 1;
+        }
+        .controls .car-selectors select {
+             width: 100%;
+        }
+        .controls .settings {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        select, button {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        button {
+            background-color: var(--accent-blue);
+            color: white;
+            border-color: transparent;
+            font-weight: 500;
+        }
+        label { font-size: 14px; color: var(--text-secondary); }
+
+        .visualization-area {
+            display: flex;
+            gap: 32px;
+            min-height: 550px;
+        }
+
+        .race-view { flex: 3; }
+        .info-view { flex: 2; display: flex; flex-direction: column; gap: 16px; }
+        .info-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-content { display: flex; gap: 16px; align-items: center; flex-grow: 1; }
+        .gauge-container { width: 180px; height: 180px; flex-shrink: 0; }
+        .info-text { line-height: 1.6; }
+        .info-text h3 { margin: 0 0 12px 0; font-size: 17px; font-weight: 600; }
+        .info-text p { margin: 4px 0; font-size: 14px; color: var(--text-secondary); }
+        .info-text p strong { color: var(--text-primary); font-weight: 500; }
+
+        .scatterplot-container {
+            height: 500px;
+            width: 100%;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--text-primary);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+        .axis line, .axis path { stroke: var(--border-color); }
+        .axis text { fill: var(--text-secondary); }
+        .axis-label { font-size: 14px; fill: var(--text-secondary); }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
     </style>
 </head>
 <body>
-<div class="topbar">
-    <div class="brand">Racing-Luxe Cars</div>
-    <nav class="nav">
-        <a href="#ribbon" id="linkRibbon">🏎 Track Ribbon</a>
-        <a href="#gauges" id="linkGauges">🧭 Gauges</a>
-        <a href="#dash" id="linkDash">🏁 Acceleration Dash</a>
-    </nav>
-</div>
+    <div class="container">
+        <header class="header">
+            <h1>Racing-Luxe</h1>
+            <p>An interactive dashboard to compare the performance and specifications of luxury and high-performance vehicles.</p>
+        </header>
 
-<div class="wrap">
-    <section id="viewRibbon" aria-label="Track Ribbon Compare">
-        <svg id="ribbonSVG" width="1120" height="660" viewBox="0 0 1120 660"></svg>
-        <div class="panel">
-            <select id="carSel1"></select>
-            <select id="carSel2"></select>
-            <select id="carSel3"></select>
-            <button id="random3">🎲 Random 3</button>
-        </div>
-    </section>
+        <!-- Market Explorer Panel -->
+        <section class="main-panel">
+            <h2 class="panel-title">Market Explorer</h2>
+            <div class="controls no-border">
+                <label for="seatFilter">Filter by Seats:</label>
+                <select id="seatFilter"></select>
+            </div>
+            <div class="scatterplot-container">
+                <svg id="scatterPlotSVG"></svg>
+            </div>
+        </section>
 
-    <section id="viewGauges" aria-label="Telemetry Gauge Cluster">
-        <svg id="gaugeSVG" width="1120" height="660" viewBox="0 0 1120 660"></svg>
-        <div class="panel">
-            <select id="g1"></select>
-            <select id="g2"></select>
-            <select id="g3"></select>
-            <label style="font-size:12px;color:#e6e6e6;display:flex;align-items:center;gap:6px;">
-                Baseline
-                <select id="baseMode">
-                    <option value="abs">Absolute</option>
-                    <option value="norm">Normalize to Best=100%</option>
-                </select>
-            </label>
-        </div>
-    </section>
-    
-    <section id="viewDash" aria-label="Acceleration Dash">
-        <svg id="dashSVG" width="1120" height="660" viewBox="0 0 1120 660"></svg>
-        <div class="panel">
-            <select id="dashCar1"></select>
-            <select id="dashCar2"></select>
-            <select id="dashCar3"></select>
-            <button id="startRaceBtn">🚀 Start Race</button>
-        </div>
-    </section>
-</div>
+        <!-- Head-to-Head Comparison Panel -->
+        <main class="main-panel">
+            <h2 class="panel-title">Head-to-Head Comparison</h2>
+            <div class="controls">
+                <div class="car-selectors">
+                    <select id="carSel1"></select>
+                    <select id="carSel2"></select>
+                    <select id="carSel3"></select>
+                </div>
+                <div class="settings">
+                    <label>Baseline:</label>
+                    <select id="baseMode">
+                        <option value="abs">Absolute</option>
+                        <option value="norm">Normalize to Best</option>
+                    </select>
+                    <button id="random3">🎲 Randomize</button>
+                </div>
+            </div>
+            <div class="visualization-area">
+                <div class="race-view">
+                    <svg id="ribbonSVG" viewBox="0 0 1120 660"></svg>
+                </div>
+                <div id="infoView" class="info-view"></div>
+            </div>
+        </main>
 
-<script src="https://unpkg.com/d3@7"></script>
-<script src="main.js" type="module"></script>
+        <footer>
+            Data Visualization by Yansong Zhu, Yichen Fan, Fanke Qin
+        </footer>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script src="https://unpkg.com/d3@7"></script>
+    <script src="main.js" type="module"></script>
 </body>
 </html>

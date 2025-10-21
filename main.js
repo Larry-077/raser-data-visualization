@@ -1,17 +1,9 @@
-function setView(h){
-    const v = h || location.hash || '#ribbon';
-    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-    document.getElementById('linkRibbon').classList.toggle('active', v==='#ribbon');
-    document.getElementById('linkGauges').classList.toggle('active', v==='#gauges');
-    document.getElementById('linkDash').classList.toggle('active', v==='#dash');
+// --- 全局状态与辅助函数 ---
+const keyOf = d => `${d.brand}__${d.model}`;
+const fmtK = x => !isFinite(x) ? '—' : (x >= 1e3 ? (x / 1e3).toFixed(0) + 'k' : String(Math.round(x || 0)));
 
-    if (v === '#gauges') document.getElementById('viewGauges').classList.add('active');
-    else if (v === '#dash') document.getElementById('viewDash').classList.add('active');
-    else document.getElementById('viewRibbon').classList.add('active');
-}
-window.addEventListener('hashchange',()=>setView(location.hash));
-
-const CSV_PATH = 'Cars Datasets 2025.csv';
+// --- 数据加载 ---
+const CSV_PATH = 'Cars Datasets 2025 1.csv';
 
 const parseRow = (d) => {
     const num = (v) => {
@@ -29,26 +21,94 @@ const parseRow = (d) => {
         hp:    num(d['HorsePower']),
         tops:  num(d['Total Speed']),
         accel: num(d['Performance(0 - 100 )KM/H']),
-        price: num(d['Cars Prices'])
+        price: num(d['Cars Prices']),
+        seats: String(d['Seats'] || 'N/A').trim(),
+        capacity: num(d['CC/Battery Capacity'])
     };
 };
 
-const RAW = (await d3.csv(CSV_PATH, parseRow))
-    .filter(d => d.model && (isFinite(d.hp)||isFinite(d.accel)||isFinite(d.tops)));
+// --- 主程序入口 ---
+async function main() {
+    try {
+        const rawData = (await d3.csv(CSV_PATH, parseRow))
+            .filter(d => d.model && isFinite(d.hp) && isFinite(d.capacity) && d.seats && d.seats !== 'N/A');
+        
+        console.log('Loaded data:', rawData.length, 'cars');
+        console.log('Sample data:', rawData.slice(0, 3));
+        
+        if (rawData.length === 0) {
+            console.error('No valid data loaded! Check CSV file path and format.');
+            return;
+        }
+        
+        // 初始化所有可视化模块
+        const ribbonVis = new RibbonTrack('#ribbonSVG', rawData);
+        const gaugePanel = new EnhancedGaugePanel('#infoView', rawData);
+        const scatterPlot = new ScatterPlot('#scatterPlotSVG', rawData);
 
-const brands  = Array.from(new Set(RAW.map(d=>d.brand))).sort();
-const palette = d3.scaleOrdinal().domain(brands).range([
-    '#ff2a3d','#ff7b89','#ff4c6a','#ff8a50','#ffc857',
-    '#9bd356','#4db3ff','#66e0ff','#b08cff','#ad1fff',
-    '#7c4dff','#d81b60','#ff3d00','#c8d0d7','#6ad3c2','#c6ff8e'
-]);
-const fmtK = x => !isFinite(x) ? '—' : (x>=1e6? (x/1e6).toFixed(2)+'M' : x>=1e3? (x/1e3).toFixed(0)+'k' : String(Math.round(x||0)));
-const keyOf = d => `${d.brand}__${d.model}`;
+        // 设置并管理所有控件
+        setupControls(rawData, ribbonVis, gaugePanel, scatterPlot);
+    } catch (error) {
+        console.error('Error loading data:', error);
+        alert('Error loading CSV file. Please check:\n1. File name is correct: "' + CSV_PATH + '"\n2. File is in the same directory as index.html\n3. Check browser console for details');
+    }
+}
+
+main();
+
+// --- 控件管理 ---
+function setupControls(data, ribbonVis, gaugePanel, scatterPlot) {
+    // --- 主对比面板的控件 ---
+    const names = data.map(d => `${d.brand} ${d.model}`);
+    const selects = [d3.select('#carSel1'), d3.select('#carSel2'), d3.select('#carSel3')];
+    selects.forEach(s => s.selectAll('option').data(names).join('option').text(d => d));
+
+    function updateComparisonPanel() {
+        const selectedNames = selects.map(s => s.property('value'));
+        const selectedCars = selectedNames.map(name => data.find(d => `${d.brand} ${d.model}` === name)).filter(Boolean);
+        const baseline = d3.select('#baseMode').property('value');
+        ribbonVis.setCars(selectedCars);
+        gaugePanel.update(selectedCars, baseline);
+    }
+
+    // 设置默认选择的车辆
+    if (names.length >= 3) {
+        selects[0].property('value', names[0]);
+        selects[1].property('value', names[1]);
+        selects[2].property('value', names[2]);
+    }
+
+    selects.forEach(s => s.on('change', updateComparisonPanel));
+    d3.select('#baseMode').on('change', updateComparisonPanel);
+    d3.select('#random3').on('click', () => {
+        const randomCars = d3.shuffle(names.slice()).slice(0, 3);
+        selects.forEach((s, i) => s.property('value', randomCars[i]));
+        updateComparisonPanel();
+    });
+    updateComparisonPanel();
+
+    // --- 散点图的控件 ---
+    const seatOptions = ['All', ...Array.from(new Set(data.map(d => d.seats))).sort()];
+    const seatFilter = d3.select('#seatFilter');
+    seatFilter.selectAll('option').data(seatOptions).join('option')
+        .attr('value', d => d)
+        .text(d => d);
+    
+    seatFilter.on('change', function() {
+        scatterPlot.filterBySeats(this.value);
+    });
+}
+
+// ===============================================
+//           可视化类
+// ===============================================
 
 class RibbonTrack {
     constructor(parentSel, data){
         this.parentSel = parentSel;
         this.data = data;
+        const brands  = Array.from(new Set(this.data.map(d=>d.brand))).sort();
+        this.palette = d3.scaleOrdinal(d3.schemeCategory10).domain(brands);
         this.initVis();
     }
     initVis(){
@@ -58,7 +118,7 @@ class RibbonTrack {
         vis.width  = vis.outerW - vis.margin.left - vis.margin.right;
         vis.height = vis.outerH - vis.margin.top - vis.margin.bottom;
 
-        vis.svg = d3.select('#ribbonSVG');
+        vis.svg = d3.select(vis.parentSel);
         vis.g   = vis.svg.append('g').attr('transform',`translate(${vis.margin.left},${vis.margin.top})`);
         
         const path = d3.path();
@@ -71,119 +131,59 @@ class RibbonTrack {
 
         vis.g.append('path')
             .attr('d', vis.trackD).attr('fill','none')
-            .attr('stroke','#1f2227').attr('stroke-width',30).attr('stroke-linecap','round').attr('stroke-linejoin','round');
+            .attr('stroke','#e0e0e0').attr('stroke-width',30).attr('stroke-linecap','round').attr('stroke-linejoin','round');
         vis.baseTrack = vis.g.append('path')
             .attr('d', vis.trackD).attr('fill','none')
-            .attr('stroke','#2a2f35').attr('stroke-width',18).attr('stroke-linecap','round').attr('stroke-linejoin','round')
+            .attr('stroke','#f0f0f0').attr('stroke-width',18).attr('stroke-linecap','round').attr('stroke-linejoin','round')
             .attr('stroke-dasharray','10 18');
         vis.totalLen = vis.baseTrack.node().getTotalLength();
 
-        vis.trailG = vis.g.append('g');
         vis.carG   = vis.g.append('g');
-        vis.hudG   = vis.g.append('g');
-        vis.infoG  = vis.g.append('g');
 
         vis.wStroke = d3.scaleLinear().domain(d3.extent(vis.data, d=>d.hp)).range([6, 22]);
         vis.glow    = d3.scaleLinear().domain(d3.extent(vis.data, d=>d.tops)).range([.35, .95]);
         vis.dash    = d3.scaleLinear().domain(d3.extent(vis.data, d=>d.accel)).range([36, 8]);
-        vis.speed   = d3.scaleLinear().domain(d3.extent(vis.data, d=>d.hp)).range([1.0, 3.2]);
-
-        const names = vis.data.map(d => `${d.brand} ${d.model}`);
-        const opts  = ['— None —', ...names];
-        const s1 = d3.select('#carSel1'), s2 = d3.select('#carSel2'), s3 = d3.select('#carSel3');
-
-        [s1,s2,s3].forEach(s => s.selectAll('option').data(opts).join('option').text(d=>d));
-        d3.select('#random3').on('click', () => {
-            const pick = d3.shuffle(names.slice()).slice(0,3);
-            s1.node().value = pick[0] || '— None —';
-            s2.node().value = pick[1] || '— None —';
-            s3.node().value = pick[2] || '— None —';
-            vis.setCars(vis.getSelected());
-        });
-        [s1,s2,s3].forEach(s => s.on('change', ()=> vis.setCars(vis.getSelected())));
         
-        s1.node().value = "ASTON MARTIN VANTAGE F1";
-        s2.node().value = "TOYOTA GR SUPRA";
-        s3.node().value = "PORSCHE 911 GT3 RS";
+        vis.speed = d3.scalePow().exponent(2)
+            .domain([0, d3.max(vis.data, d => d.hp)])
+            .range([0.5, 6.0]);
 
-        vis.setCars(vis.getSelected());
+        vis.setCars([]);
         vis.start();
     }
-    getSelected(){
-        const chosen = [carSel1.value, carSel2.value, carSel3.value].filter(v=> v && v!=='— None —');
-        if(!chosen.length){
-             return [
-                this.data.find(c => c.model === 'VANTAGE F1'),
-                this.data.find(c => c.model === 'GR SUPRA'),
-                this.data.find(c => c.model === '911 GT3 RS')
-            ].filter(Boolean);
-        }
-        const list=[], seen=new Set();
-        for(const name of chosen){
-            const car = this.data.find(x => `${x.brand} ${x.model}`===name);
-            if(car && !seen.has(keyOf(car))){ list.push(car); seen.add(keyOf(car)); }
-        }
-        if(list.length<3){
-            this.data.slice().sort((a,b)=>(b.hp||0)-(a.hp||0)).some(c=>{
-                if(!seen.has(keyOf(c))){ list.push(c); seen.add(keyOf(c)); }
-                return list.length>=3;
-            });
-        }
-        return list.slice(0,3);
-    }
+    
     setCars(list){
         const vis = this;
         vis.cars = list;
         vis.states = vis.cars.map((d,i)=>({d, off:(i*vis.totalLen/10)%vis.totalLen, v: vis.speed(d.hp)}));
         vis.updateVis();
     }
+
     updateVis(){
         const vis = this;
-        vis.infoG.selectAll('*').remove();
-        const x=820,y=16,w=260,h=140;
-        vis.infoG.append('rect').attr('x',x).attr('y',y).attr('rx',10).attr('ry',10).attr('width',w).attr('height',h)
-            .attr('fill','rgba(16,18,22,.55)').attr('stroke','rgba(255,255,255,.12)');
-        vis.infoG.append('text').attr('x',x+10).attr('y',y+18).text('Cars (details)').style('font-size','12px').style('fill','#dfe3e8');
-        vis.infoG.selectAll('.card').data(vis.cars, keyOf).join(enter=>{
-            const g = enter.append('g').attr('class','card')
-                .attr('transform',(_,i)=>`translate(${x+8},${y+28+i*36})`);
-            g.append('circle').attr('r',5).attr('cy',6).attr('fill', d=>palette(d.brand));
-            g.append('text').attr('x',12).attr('y',10).style('font-size','12px').style('fill','#e9edf2')
-                .text(d=>`${d.brand} ${d.model}`);
-            g.append('text').attr('x',12).attr('y',24).style('font-size','11px').style('fill','#c9c9c9')
-                .text(d=>`HP ${d.hp ?? '—'} · 0–100 ${d.accel ?? '—'}s · ${d.tops ?? '—'} km/h · $${fmtK(d.price)}`);
-            return g;
-        });
-        vis.hudG.selectAll('*').remove();
-        vis.hudG.append('rect').attr('x',820).attr('y',164).attr('rx',10).attr('ry',10).attr('width',260).attr('height',78)
-            .attr('fill','rgba(16,18,22,.55)').attr('stroke','rgba(255,255,255,.12)');
-        vis.hudG.append('text').attr('x',830).attr('y',182).text('Live Order').style('font-size','12px').style('fill','#dfe3e8');
-        vis.cars.slice(0,3).forEach((d,i)=>{
-            vis.hudG.append('text').attr('x',830).attr('y',202+i*16).text(`${i+1}. ${d.brand} ${d.model}`)
-                .style('font-size','12px').style('fill','#c9c9c9');
-        });
         const ribbons = vis.carG.selectAll('.ribbon').data(vis.cars, keyOf)
             .join(
                 enter => {
                     const g = enter.append('g').attr('class','ribbon');
                     g.append('path').attr('class','rLine').attr('d', vis.trackD).attr('fill','none');
-                    g.append('circle').attr('class','marker').attr('r',7).attr('stroke','#111').attr('stroke-width',2);
+                    g.append('circle').attr('class','marker').attr('r',7).attr('stroke','#333').attr('stroke-width',2);
                     g.append('text').attr('class','spd').attr('dy',-12).attr('text-anchor','middle')
-                        .style('font-size','11px').style('fill','#dfe3e8');
+                        .style('font-size','11px').style('fill','#1d1d1f');
                     return g;
                 },
                 update => update,
                 exit => exit.remove()
             );
+
         ribbons.each(function(d){
             const sel = d3.select(this);
             sel.select('.rLine')
-                .attr('stroke', palette(d.brand))
+                .attr('stroke', vis.palette(d.brand))
                 .attr('stroke-opacity', vis.glow(d.tops||0))
                 .attr('stroke-width', vis.wStroke(d.hp||0))
                 .attr('stroke-linecap','round')
                 .attr('stroke-dasharray', `${vis.dash(d.accel||0)} ${vis.dash(d.accel||0)}`);
-            sel.select('.marker').attr('fill', palette(d.brand));
+            sel.select('.marker').attr('fill', vis.palette(d.brand));
         });
     }
     start(){
@@ -210,200 +210,285 @@ class RibbonTrack {
     }
 }
 
-class GaugeCluster {
-    constructor(parentSel, data){
-        this.parentSel = parentSel;
+class EnhancedGaugePanel {
+    constructor(selector, data) {
+        this.container = d3.select(selector);
         this.data = data;
-        this.initVis();
+        this.metrics = [
+            {key:'hp',label:'HP'},{key:'tops',label:'Top Speed'},
+            {key:'accel',label:'0-100s'}, {key:'price',label:'Price'}
+        ];
+        this.colorFor = k => k==='hp'? '#e63946' : k==='accel'? '#457b9d' : k==='tops'? '#fca311' : '#6c757d';
     }
-    initVis(){
-        const vis = this;
-        vis.margin = {top: 20, right: 20, bottom: 20, left: 20};
-        vis.svg = d3.select('#gaugeSVG');
-        vis.g   = vis.svg.append('g').attr('transform',`translate(${vis.margin.left},${vis.margin.top})`);
-        vis.slots   = [{x:140,y:160},{x:560,y:160},{x:980,y:160}];
-        vis.metrics = [{key:'hp',label:'HP'},{key:'accel',label:'0-100s'},{key:'tops',label:'Top'},{key:'price',label:'Price'}];
-        vis.slots.forEach(p=>{
-            vis.g.append('circle').attr('cx',p.x).attr('cy',p.y).attr('r',120).attr('fill','rgba(255,255,255,.02)').attr('stroke','#2a2f35');
-            vis.g.append('text').attr('x',p.x).attr('y',p.y+140).attr('text-anchor','middle').style('font-size','12px').style('fill','#dfe3e8').text('Select a car');
-        });
-        const names = vis.data.map(d => `${d.brand} ${d.model}`);
-        const opts  = ['— None —', ...names];
-        vis.selects = [d3.select('#g1'), d3.select('#g2'), d3.select('#g3')];
-        vis.selects.forEach(s => s.selectAll('option').data(opts).join('option').text(d=>d));
-        vis.selects.forEach(s => s.on('change', ()=> vis.drawAll()));
-        document.getElementById('baseMode').addEventListener('change', ()=> vis.drawAll());
-        vis.drawAll();
-    }
-    drawAll(){
-        const vis = this;
-        const picked = vis.selects
-            .map(s => vis.data.find(x=> `${x.brand} ${x.model}`===s.node().value))
-            .filter(Boolean);
 
-        const baseMode = document.getElementById('baseMode').value;
+    update(selectedCars, baseline) {
         const best = {
-            hp:   d3.max(picked, d=>d.hp)   || 1,
-            accel:d3.min(picked, d=>d.accel)|| 1,
-            tops: d3.max(picked, d=>d.tops) || 1,
-            price:d3.max(picked, d=>d.price)|| 1
+            hp: d3.max(selectedCars, d => d.hp) || 1,
+            accel: d3.min(selectedCars, d => d.accel) || 1,
+            tops: d3.max(selectedCars, d => d.tops) || 1,
+            price: d3.max(selectedCars, d => d.price) || 1
         };
 
-        vis.slots.forEach((p,slotIdx)=>{
-            vis.g.selectAll(`.slot-${slotIdx}`).remove();
-            const name = vis.selects[slotIdx].node().value;
-            if(name==='— None —') return;
-            const car = vis.data.find(x=> `${x.brand} ${x.model}`===name);
-            const layer = vis.g.append('g').attr('class',`slot-${slotIdx}`);
-            layer.append('text')
-                .attr('x',p.x).attr('y',p.y-132).attr('text-anchor','middle')
-                .style('font-weight','700').text(`${car.brand} ${car.model}`);
-            vis.metrics.forEach((m,idx)=>{
-                const r0=40+idx*18, r1=r0+12;
-                const ang = d3.scaleLinear().domain([-1,1]).range([-2.1,2.1]);
-                layer.append('path')
-                    .attr('d', d3.arc()({innerRadius:r0, outerRadius:r1, startAngle:-2.1, endAngle:2.1}))
-                    .attr('transform',`translate(${p.x},${p.y})`).attr('fill','#1c2026');
+        const cards = this.container.selectAll('.info-card')
+            .data(selectedCars, d => keyOf(d))
+            .join(
+                enter => {
+                    const card = enter.append('div').attr('class', 'info-card');
+                    const content = card.append('div').attr('class', 'card-content');
+                    
+                    const svgContainer = content.append('div').attr('class', 'gauge-container');
+                    const svg = svgContainer.append('svg').attr('viewBox', '0 0 200 200');
+                    const g = svg.append('g').attr('transform', 'translate(100, 100)');
+                    
+                    const textInfo = content.append('div').attr('class', 'info-text');
+                    textInfo.append('h3');
+                    textInfo.append('p').attr('class', 'info-hp');
+                    textInfo.append('p').attr('class', 'info-tops');
+                    textInfo.append('p').attr('class', 'info-accel');
+                    textInfo.append('p').attr('class', 'info-price');
+
+                    this.metrics.forEach((m, idx) => {
+                        const r0 = 40 + idx * 14, r1 = r0 + 10;
+                        g.append('path')
+                            .attr('d', d3.arc()({innerRadius: r0, outerRadius: r1, startAngle: -2.1, endAngle: 2.1}))
+                            .attr('fill', '#e9ecef');
+                        
+                        g.append('path').attr('class', `needle-${m.key}`);
+                    });
+                    
+                    return card;
+                },
+                update => update,
+                exit => exit.remove()
+            );
+
+        cards.each((d, i, nodes) => {
+            const card = d3.select(nodes[i]);
+            const car = d;
+
+            card.select('h3').text(`${car.brand} ${car.model}`);
+            card.select('.info-hp').html(`Horsepower: <strong>${car.hp || 'N/A'} HP</strong>`);
+            card.select('.info-tops').html(`Top Speed: <strong>${car.tops || 'N/A'} km/h</strong>`);
+            card.select('.info-accel').html(`0-100 km/h: <strong>${car.accel || 'N/A'}s</strong>`);
+            card.select('.info-price').html(`Price: <strong>$${fmtK(car.price)}</strong>`);
+
+            const g = card.select('g');
+            this.metrics.forEach((m, idx) => {
+                const r0 = 40 + idx * 14, r1 = r0 + 10;
+                const ang = d3.scaleLinear().domain([-1, 1]).range([-2.1, 2.1]);
+                
                 const vAbs = car[m.key];
-                const vNorm = (m.key==='accel') ? (best.accel / vAbs) : (vAbs / best[m.key]);
-                const global = vis.normalizeGlobal(m.key, vAbs);
-                const val = (baseMode==='norm') ? vNorm : global;
-                const needle = layer.append('path')
-                    .attr('transform',`translate(${p.x},${p.y})`)
-                    .attr('fill', vis.colorFor(m.key)).attr('opacity',.85);
-                const to = ang(-1 + 2*val);
-                needle.transition().duration(700).ease(d3.easeCubicOut)
-                    .attrTween('d', function(){ const i=d3.interpolate(-2.1, to); return t=> d3.arc()({innerRadius:r0, outerRadius:r1, startAngle:-2.1, endAngle:i(t)}); });
+                const vNorm = (m.key === 'accel') 
+                    ? (isFinite(best.accel) && best.accel > 0 && isFinite(vAbs) ? (best.accel / vAbs) : 0)
+                    : (isFinite(best[m.key]) && best[m.key] > 0 && isFinite(vAbs) ? (vAbs / best[m.key]) : 0);
+
+                const global = this.normalizeGlobal(m.key, vAbs);
+                
+                let val = (baseline === 'norm') ? vNorm : global;
+                
+                if (isFinite(val)) {
+                    val = Math.max(0.03, val);
+                }
+
+                const to = ang(-1 + 2 * (isFinite(val) ? val : 0));
+
+                const needle = g.select(`.needle-${m.key}`);
+                const currentAngle = needle.attr('data-angle') ? +needle.attr('data-angle') : -2.1;
+
+                needle
+                    .attr('fill', this.colorFor(m.key))
+                    .transition().duration(750).ease(d3.easeCubicOut)
+                    .attrTween('d', () => {
+                        const interpolator = d3.interpolate(currentAngle, to);
+                        return t => {
+                            const currentInterpolatedAngle = interpolator(t);
+                            needle.attr('data-angle', currentInterpolatedAngle);
+                            return d3.arc()({
+                                innerRadius: r0, outerRadius: r1, 
+                                startAngle: -2.1, endAngle: currentInterpolatedAngle
+                            });
+                        }
+                    });
             });
-            const hp=car.hp, ac=car.accel, ts=car.tops, pr=car.price;
-            layer.append('text').attr('x',p.x).attr('y',p.y+18).attr('text-anchor','middle').style('font-size','20px').text(`${hp||'—'} hp`);
-            layer.append('text').attr('x',p.x).attr('y',p.y+40).attr('text-anchor','middle').style('font-size','12px').style('fill','#c9c9c9')
-                .text(`0-100 ${ac||'—'}s · ${ts||'—'} km/h · $${fmtK(pr)}`);
         });
     }
+    
     normalizeGlobal(key, val){
-        const arr = k => d3.extent(this.data, d=>d[k]);
-        const safe = a => (a[1]-a[0])||1;
-        if(!isFinite(val)) return 0.5;
-        if(key==='accel'){ const e=arr('accel'); return 1 - ((val - e[0]) / safe(e)); }
-        const e=arr(key); return (val - e[0]) / safe(e);
+        const arr = d3.extent(this.data.filter(d => isFinite(d[key])), d => d[key]);
+        if (!isFinite(val) || arr[0] === undefined || arr[1] === undefined) return 0;
+        
+        const domainSize = arr[1] - arr[0];
+        if (domainSize === 0) return 0.5;
+
+        if(key === 'accel'){ 
+            return 1 - ((val - arr[0]) / domainSize); 
+        }
+        return (val - arr[0]) / domainSize;
     }
-    colorFor(k){ return k==='hp'? '#ff2a3d' : k==='accel'? '#66ccff' : k==='tops'? '#ffc857' : '#c8d0d7'; }
 }
 
-class AccelerationDash {
-    constructor(parentSel, data) {
-        this.parentSel = parentSel;
+class ScatterPlot {
+    constructor(selector, data) {
+        this.svg = d3.select(selector);
         this.data = data;
+        this.currentFilter = 'All';
+        
+        console.log('ScatterPlot initialized with', data.length, 'data points');
+        
+        // 创建品牌颜色映射
+        const brands = Array.from(new Set(this.data.map(d => d.brand))).sort();
+        this.colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(brands);
+        
         this.initVis();
     }
 
     initVis() {
         const vis = this;
-        vis.margin = {top: 60, right: 60, bottom: 60, left: 60};
-        vis.width = 1120 - vis.margin.left - vis.margin.right;
-        vis.height = 660 - vis.margin.top - vis.margin.bottom;
-
-        vis.svg = d3.select(vis.parentSel);
-        vis.g = vis.svg.append('g').attr('transform', `translate(${vis.margin.left},${vis.margin.top})`);
         
-        vis.startX = 50;
-        vis.endX = vis.width - 50;
-
-        for (let i = 0; i < 3; i++) {
-            const y = vis.height / 4 * (i + 1);
-            vis.g.append('line')
-                .attr('x1', vis.startX - 20).attr('x2', vis.endX + 20)
-                .attr('y1', y).attr('y2', y)
-                .attr('stroke', '#2a2f35').attr('stroke-width', 2).attr('stroke-dasharray', '8 8');
+        // 立即绘制一次
+        const container = vis.svg.node().parentElement;
+        if (container) {
+            const rect = container.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                vis.draw(rect.width, rect.height);
+            }
         }
         
-        vis.g.append('line').attr('x1', vis.startX).attr('x2', vis.startX)
-           .attr('y1', 50).attr('y2', vis.height - 50)
-           .attr('stroke', 'var(--green)').attr('stroke-width', 3);
-        vis.g.append('text').text('START').attr('x', vis.startX - 10).attr('y', 30)
-           .attr('fill', 'var(--green)').attr('text-anchor', 'end').style('font-weight', 700);
-
-        vis.g.append('line').attr('x1', vis.endX).attr('x2', vis.endX)
-           .attr('y1', 50).attr('y2', vis.height - 50)
-           .attr('stroke', 'var(--red)').attr('stroke-width', 3);
-        vis.g.append('text').text('FINISH (100 km/h)').attr('x', vis.endX + 10).attr('y', 30)
-           .attr('fill', 'var(--red)').style('font-weight', 700);
-
-        vis.carG = vis.g.append('g');
-
-        const names = vis.data.map(d => `${d.brand} ${d.model}`);
-        vis.selects = [d3.select('#dashCar1'), d3.select('#dashCar2'), d3.select('#dashCar3')];
-        vis.selects.forEach(sel => {
-            sel.selectAll('option').data(names).join('option').text(d => d);
-            sel.on('change', () => vis.updateVis());
-        });
-
-        d3.select('#startRaceBtn').on('click', () => vis.startRace());
-
-        vis.selects[0].node().value = "FERRARI SF90 STRADALE";
-        vis.selects[1].node().value = "TESLA MODEL S PLAID";
-        vis.selects[2].node().value = "ROLLS ROYCE PHANTOM";
-        
-        vis.updateVis();
-    }
-
-    updateVis() {
-        const vis = this;
-        d3.select('#startRaceBtn').property('disabled', false).style('opacity', 1);
-
-        vis.cars = vis.selects
-            .map(sel => vis.data.find(c => `${c.brand} ${c.model}` === sel.node().value))
-            .filter(Boolean);
-        
-        const carNodes = vis.carG.selectAll('.car-racer')
-            .data(vis.cars, d => keyOf(d))
-            .join(
-                enter => {
-                    const g = enter.append('g').attr('class', 'car-racer');
-                    g.append('circle').attr('r', 15).attr('stroke', '#fff').attr('stroke-width', 2);
-                    g.append('text').attr('class', 'car-label').attr('x', -25)
-                       .attr('text-anchor', 'end').attr('dy', '0.35em').attr('fill', '#fff');
-                    g.append('text').attr('class', 'time-label').attr('x', vis.endX + 25)
-                        .attr('dy', '0.35em').attr('fill', 'var(--amber)').style('font-weight', 'bold')
-                        .style('opacity', 0);
-                    return g;
+        // 监听窗口大小变化
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                const { width, height } = entry.contentRect;
+                if (width > 0 && height > 0) {
+                    vis.draw(width, height);
                 }
-            );
-        
-        carNodes
-            .attr('transform', (d, i) => `translate(${vis.startX}, ${vis.height / 4 * (i + 1)})`)
-            .select('circle').attr('fill', d => palette(d.brand));
-        
-        carNodes.select('.car-label').text(d => `${d.brand} ${d.model}`);
-        carNodes.select('.time-label').text(d => `${d.accel}s`);
+            }
+        });
+        resizeObserver.observe(container);
     }
 
-    startRace() {
+    draw(width, height) {
         const vis = this;
-        d3.select('#startRaceBtn').property('disabled', true).style('opacity', 0.5);
         
-        vis.carG.selectAll('.car-racer')
-            .attr('transform', (d, i) => `translate(${vis.startX}, ${vis.height / 4 * (i + 1)})`)
-            .select('.time-label').style('opacity', 0);
+        console.log('Drawing scatter plot:', width, 'x', height);
+        
+        vis.svg.selectAll('*').remove();
 
-        vis.carG.selectAll('.car-racer')
-            .transition()
-            .ease(d3.easeLinear)
-            .duration(d => (d.accel || 10) * 800)
-            .attr('transform', (d, i) => `translate(${vis.endX}, ${vis.height / 4 * (i + 1)})`)
-            .on('end', function() {
-                d3.select(this).select('.time-label').transition().style('opacity', 1);
-            });
+        vis.margin = {top: 20, right: 30, bottom: 50, left: 70};
+        vis.width = width - vis.margin.left - vis.margin.right;
+        vis.height = height - vis.margin.top - vis.margin.bottom;
         
-        const maxDuration = d3.max(vis.cars, d => (d.accel || 10) * 800);
-        setTimeout(() => {
-            d3.select('#startRaceBtn').property('disabled', false).style('opacity', 1);
-        }, maxDuration);
+        // 设置SVG尺寸
+        vis.svg
+            .attr('width', width)
+            .attr('height', height);
+        
+        vis.g = vis.svg.append('g')
+            .attr('transform', `translate(${vis.margin.left},${vis.margin.top})`);
+        
+        // 创建比例尺
+        const maxHp = d3.max(vis.data, d => d.hp);
+        const maxCapacity = d3.max(vis.data, d => d.capacity);
+        
+        console.log('Data ranges - HP:', [0, maxHp], 'Capacity:', [0, maxCapacity]);
+        
+        vis.xScale = d3.scaleLinear()
+            .domain([0, maxHp * 1.1])
+            .range([0, vis.width])
+            .nice();
+            
+        vis.yScale = d3.scaleLinear()
+            .domain([0, maxCapacity * 1.1])
+            .range([vis.height, 0])
+            .nice();
+        
+        // 添加坐标轴
+        const xAxis = d3.axisBottom(vis.xScale).ticks(8);
+        const yAxis = d3.axisLeft(vis.yScale).ticks(8);
+        
+        vis.g.append('g')
+            .attr('class', 'axis x-axis')
+            .attr('transform', `translate(0, ${vis.height})`)
+            .call(xAxis);
+
+        vis.g.append('g')
+            .attr('class', 'axis y-axis')
+            .call(yAxis);
+        
+        // 添加坐标轴标签
+        vis.g.append('text')
+            .attr('class', 'axis-label')
+            .attr('x', vis.width / 2)
+            .attr('y', vis.height + 40)
+            .attr('text-anchor', 'middle')
+            .text('Horsepower (HP)');
+
+        vis.g.append('text')
+            .attr('class', 'axis-label')
+            .attr('transform', 'rotate(-90)')
+            .attr('x', -vis.height / 2)
+            .attr('y', -50)
+            .attr('text-anchor', 'middle')
+            .text('Engine/Battery Capacity (cc/kWh)');
+
+        const tooltip = d3.select('#tooltip');
+
+        // 绘制数据点
+        vis.dots = vis.g.selectAll('.dot')
+            .data(vis.data)
+            .join('circle')
+                .attr('class', 'dot')
+                .attr('cx', d => vis.xScale(d.hp))
+                .attr('cy', d => vis.yScale(d.capacity))
+                .attr('r', 6)
+                .attr('fill', d => vis.colorScale(d.brand))
+                .attr('opacity', d => (vis.currentFilter === 'All' || d.seats === vis.currentFilter) ? 0.7 : 0.05)
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 1)
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr('r', 10)
+                        .attr('stroke-width', 2);
+                    
+                    tooltip.style('opacity', 1)
+                        .html(`<strong>${d.brand} ${d.model}</strong><br>
+                               Seats: ${d.seats}<br>
+                               HP: ${d.hp}<br>
+                               Capacity: ${d.capacity} cc<br>
+                               Top Speed: ${d.tops} km/h<br>
+                               Price: $${fmtK(d.price)}`);
+                })
+                .on('mousemove', (event) => {
+                    tooltip
+                        .style('left', `${event.pageX + 15}px`)
+                        .style('top', `${event.pageY - 10}px`);
+                })
+                .on('mouseout', function() {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr('r', 6)
+                        .attr('stroke-width', 1);
+                    
+                    tooltip.style('opacity', 0);
+                });
+        
+        console.log('Scatter plot drawn with', vis.dots.size(), 'points');
+    }
+
+    filterBySeats(seatValue) {
+        const vis = this;
+        vis.currentFilter = seatValue;
+        console.log('Filtering by seats:', seatValue);
+        
+        if (!vis.dots) return;
+        
+        vis.dots
+            .transition()
+            .duration(300)
+            .attr('opacity', d => (seatValue === 'All' || d.seats === seatValue) ? 0.7 : 0.05)
+            .attr('r', d => (seatValue === 'All' || d.seats === seatValue) ? 6 : 4);
     }
 }
-
-new RibbonTrack('#ribbonSVG', RAW);
-new GaugeCluster('#gaugeSVG', RAW);
-new AccelerationDash('#dashSVG', RAW);
-setView(location.hash || '#ribbon');
