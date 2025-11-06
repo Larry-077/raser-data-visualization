@@ -392,7 +392,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* 自定义滚动条 */
+        
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -411,7 +411,7 @@
             background: var(--accent-red);
         }
 
-        /* 添加微妙的网格背景 */
+        
         body::before {
             content: '';
             position: fixed;
@@ -431,7 +431,58 @@
             position: relative;
             z-index: 1;
         }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: linear-gradient(90deg, var(--border-color) 0%, var(--accent-red) 100%);
+            border-radius: 3px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
 
+        input[type="range"]:hover {
+            background: linear-gradient(90deg, var(--accent-red) 0%, var(--gradient-end) 100%);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-red);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-red-glow);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px var(--accent-red-glow);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-red);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-red-glow);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px var(--accent-red-glow);
+        }
+
+        #dataCountValue {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -441,6 +492,7 @@
             <p>An interactive dashboard to compare the performance and specifications of luxury and high-performance vehicles.</p>
         </header>
 
+        <!-- Market Explorer Panel -->
         <!-- Market Explorer Panel -->
         <section class="main-panel">
             <h2 class="panel-title">MARKET EXPLORER: Performance vs. Price Analysis</h2>
@@ -457,6 +509,15 @@
                     <label for="seatFilter">Filter by Seats:</label>
                     <select id="seatFilter"></select>
                 </div>
+                <!-- 🆕 新增数据量控制 -->
+                <div class="control-group" style="flex-grow: 1; max-width: 300px;">
+                    <label for="dataCountSlider">Display Cars:</label>
+                    <div style="display: flex; align-items: center; gap: 12px; flex-grow: 1;">
+                        <input type="range" id="dataCountSlider" min="10" max="500" value="100" step="10" 
+                            style="flex-grow: 1; cursor: pointer;">
+                        <span id="dataCountValue" style="min-width: 70px; font-weight: 600; color: var(--accent-red);">100</span>
+                    </div>
+                </div>
             </div>
             <div class="scatterplot-container">
                 <svg id="scatterPlotSVG"></svg>
@@ -465,6 +526,7 @@
                 <h3>💡 Data Insights</h3>
                 <p><strong>Explore the relationship between performance and price:</strong></p>
                 <p>• Use the X/Y axis controls to compare different metrics (e.g., Horsepower vs. Price)</p>
+                <p>• Adjust the data count slider to reduce visual clutter and focus on key vehicles</p>
                 <p>• The trendline and R² value show correlation strength between variables</p>
                 <p>• HP per $1000 and Performance Score reveal the best value-for-money vehicles</p>
                 <p>• Higher R² (closer to 1.0) indicates a stronger linear relationship</p>

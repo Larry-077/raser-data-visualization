@@ -7,13 +7,8 @@ ASTON MARTIN,VANTAGE F1,V8,"3,982 cc",656 hp,314 km/h,3.6 sec,"$193,440 ",Petrol
 BENTLEY,Continental GT Azure,V8,"3,996 cc",550 hp,318 km/h,4.0 sec,"$311,000 ",Petrol,4,900 Nm,3996.0,311000.0
 FERRARI,F8 TRIBUTO,V8,"3,900 cc",710 hp,340 km/h,2.9 sec,"$280,000 ",Petrol,2,770 Nm,3900.0,280000.0
 FERRARI,812 GTS,V12,6496 cc,789 hp,340 km/h,2.9 sec,"$350,000 ",Petrol,2,718 Nm,6496.0,350000.0
-FERRARI,PORTOFINO,V8,"3,900 cc",592 hp,320 km/h,3.2 sec,"$210,000 ",Petrol,2+2,760 Nm,3900.0,210000.0
-FERRARI,ROMA,V8,"3,900 cc",612 hp,320 km/h,3.4 sec,"$230,000 ",Petrol,2+2,760 Nm,3900.0,230000.0
 FERRARI,F8 SPIDER,V8,"3,900 cc",710 hp,340 km/h,2.9 sec,"$280,000 ",Petrol,2,770 Nm,3900.0,280000.0
-FERRARI,PORTOFINO M,V8,"3,900 cc",612 hp,320 km/h,3.2 sec,"$220,000 ",Petrol,2+2,760 Nm,3900.0,220000.0
-FERRARI,ROMA SPIDER,V8,"3,900 cc",612 hp,320 km/h,3.4 sec,"$240,000 ",Petrol,2+2,760 Nm,3900.0,240000.0
 TOYOTA,GR SUPRA,I4,"2,998 cc",382 hp,250 km/h,4.1 sec,"$53,900 ",Petrol,2,500 Nm,2998.0,53900.0
-TOYOTA,TOYOTA 86,BOXER-4,"1,998 cc",205 hp,226 km/h,6.4 sec,"$27,000 ",Petrol,2+2,205 Nm,1998.0,27000.0
 TOYOTA,TOYOTA  GR86,BOXER-4,"2,387 cc",228 hp,226 km/h,5.6 sec,"$30,000 ",Petrol,4,250 Nm,2387.0,30000.0
 TOYOTA,TOYOTA LAND CRUISER,V8,"5,663 cc",381 hp,220 km/h,6.7 sec,"$85,000 ",Diesel,7,500 Nm,5663.0,85000.0
 TOYOTA,TOYOTA SEQUOIA,V8,"5,663 cc",381 hp,200 km/h,6.9 sec,"$50,000 ",Petrol,7,651 Nm,5663.0,50000.0
@@ -87,7 +82,6 @@ MERCEDES,BENZ GLA 45,I4,"1,991 cc",382 hp,250 km/h,4.3 sec,"$48,000 ",Petrol,5,5
 MERCEDES,BENZ GLC 350 ,I4,"1,991 cc",255 hp,250 km/h,6.1 sec,"$46,000 ",Petrol,5,500 Nm,1991.0,46000.0
 MERCEDES,BENZ GLE 53,V6,"2,996 cc",429 hp,250 km/h,5.2 sec,"$71,000 ",Petrol,5,620 Nm,2996.0,71000.0
 MERCEDES,BENZ S-CLASS S 350,I4,"1,991 cc",255 hp,250 km/h,6.5 sec,"$90,000 ",Petrol,5,500 Nm,1991.0,90000.0
-MERCEDES,BENZ EQS 53,ELECTRIC MOTOR,,751 hp,250 km/h,3.4 sec,"$102,000 ",Electric,5,950 Nm,,102000.0
 MERCEDES,BENZ MAYBACH S 680,V12,"5,980 cc",630 hp,250 km/h,4.7 sec,"$200,000 ",Petrol,5,1000 Nm,5980.0,200000.0
 BMW,M5 CS,V8,"4,395 cc",627 hp,305 km/h,3.0 sec,"$142,000 ",Petrol,5,750 Nm,4395.0,142000.0
 BMW,M4 GTS,I6,"2,993 cc",493 hp,305 km/h,3.7 sec,"$133,000 ",Petrol,4,600 Nm,2993.0,133000.0
@@ -184,7 +178,6 @@ KIA,SPORTAGE 2024(X-PRO PRESTIGE),I4,"2,480 cc",187 hp,200 km/h,8.1 sec,"$38,000
 KIA,SPORTAGE 2024(SX TURBO AWD),I4,"1,998 cc",240 hp,210 km/h,6.5 sec,"$40,000 ",Petrol/AWD,5,400 Nm,1998.0,40000.0
 KIA  ,SPORTAGE 2024(BASE FWD),I4,"2,480 cc",187 hp,200 km/h,8.5 sec,"$26,500 ",Petrol,5,250 Nm,2480.0,26500.0
 HONDA,CR-V,I4,"1,498 cc",190 hp,186 km/h,8.2 sec,"$30,000 ",Petrol/Hybrid,5,400 Nm,1498.0,30000.0
-HONDA,PILOT,V6,"3,471 cc",285 hp,209 km/h,6.3 sec,"$40,000 ",Petrol,8,360 Nm,3471.0,40000.0
 HONDA,CIVIC HATCHBACK,I4,"1,498 cc",180 hp,220 km/h,6.8 sec,"$26,350 ",Petrol,5,300 Nm,1498.0,26350.0
 TOYOTA,CAMRY,V6,"3,500 cc",301 hp,220 km/h,6.0 sec,"$27,000 ",Petrol/Hybrid,5,250 Nm,3500.0,27000.0
 TOYOTA,COROLLA,I4,"1,798 cc",139 hp,180 km/h,9.4 sec,"$22,500 ",Petrol/Hybrid,5,200 Nm,1798.0,22500.0
@@ -226,7 +219,6 @@ TOYOTA,MIRAI,"HYDROGEN FUEL CELL,ELECTRIC MOTOR",1.24 kwh,152 hp,180 km/h,9.0 se
 TOYOTA,HILUX GR SPORT,"2.8L,TURBO,DIESEL","2,755 cc",224 hp,170 km/h,10.0 sec,"$50,000 ",Petrol/Diesel,5,500 Nm,2755.0,50000.0
 TOYOTA,FORTUNER GR SPORT,"2.8L,TURBO,DIESEL","2,755 cc",204 hp,175 km/h,10.5 sec,"$55,000 ",Diesel/Petrol,7,500 Nm,2755.0,55000.0
 TOYOTA,INNOVA HYCROSS,2.0L HYBRID,"1,987 cc",184 hp,165 km/h,9.5 sec,"$40,000 ",Hybrid,7,250 Nm,1987.0,40000.0
-TOYOTA,COASTER,"4.0L,DIESEL","4,009 cc",134 hp,120 km/h,,"$70,000 ",Diesel,20,500 Nm,4009.0,70000.0
 TOYOTA,URBAN CRUISER TAISOR,"1.5L,HYBRID","1,490 cc",114 hp,170 km/h,11 sec,"$25,000 ",Petrol,5,130 Nm,1490.0,25000.0
 TOYOTA,AYGO X,"1.0L,INLINE-3",998 cc,71 hp,160 km/h,14.8 sec,"$18,000 ",Petrol,4,93 Nm,998.0,18000.0
 TOYOTA,HILUX REVO ROCCO,"2.8L,TURBO,DIESEL","2,755 cc",204 hp ,175 km/h,10.0 sec,"$50,000 ",Diesel,5,500 Nm,2755.0,50000.0
@@ -266,7 +258,6 @@ Volkswagen,Amarok,3.0L V6 Turbo Diesel,2967 cc,163 - 258 hp,180 km/h,7.9 sec,"$4
 Volkswagen,T-Roc,2.0L Turbo I4,1984 cc,115 - 300 hp,205 km/h,7.2 sec,"$30,000 ",Petrol,5,320 Nm,1984.0,30000.0
 Volkswagen,Sharan,2.0L Turbo I4,1984 cc,150 - 220 hp,200 km/h,9.3 sec,"$33,000 ","Petrol, Diesel",7,280 Nm,1984.0,33000.0
 Volkswagen,Caddy,1.5L Turbo I4,1498 cc,102 - 150 hp,185 km/h,10.5 sec,"$28,000 ","Petrol, Diesel",7,250 Nm,1498.0,28000.0
-Nissan,NV1500,4.0L V6,3954 cc,261 hp,160 km/h,9.5 sec,"$33,000 ",Petrol,12,385 Nm,3954.0,33000.0
 Volkswagen,Taigo,1.5L Turbo I4,1498 cc,95 - 150 hp,183 km/h,10.0 sec,"$24,000 ",Petrol,5,200 Nm,1498.0,24000.0
 Volkswagen,California,2.0L Turbo I4,1984 cc,150 - 204 hp,180 km/h,13.0 sec,"$70,000 ",Diesel,7,340 Nm,1984.0,70000.0
 Volkswagen,ID.3,Electric,58 - 77 kWh,204 hp,160 km/h,7.3 sec,"$35,000 ",Electric,5,310 Nm,5877.0,35000.0
@@ -296,7 +287,6 @@ Volkswagen,Golf Electric,Electric,35.8 kWh,136 hp,140 km/h,10.4 sec,"$33,000 ",E
 Volkswagen,Taos,1.5L I4 Turbo,1498 cc,158 hp,193 km/h,8.4 sec,"$24,000 ",Petrol,5,250 Nm,1498.0,24000.0
 Volkswagen,Up! Cabriolet,1.0L I3 Turbo,999 cc,82 - 115 hp,160 km/h,12.4 sec,"$18,000 ",Petrol,4,95 Nm,999.0,18000.0
 Volkswagen,Passat CC,2.0L I4 Turbo,1984 cc,200 - 280 hp,240 km/h,7.3 sec,"$40,000 ",Petrol,5,280 Nm,1984.0,40000.0
-Volkswagen,Transporter,2.0L I4 Turbo Diesel,1968 cc,102 - 204 hp,180 km/h,12.2 sec,"$35,000 ",Diesel,9,340 Nm,1968.0,35000.0
 Volkswagen,Amarok V6,3.0L V6 Turbo Diesel,2967 cc,204 - 258 hp,191 km/h,7.9 sec,"$45,000 ",Diesel,5,580 Nm,2967.0,45000.0
 Volkswagen,ID.2,Electric,~50 kWh (Estimate),~170 hp,160 km/h,8.0 sec,"$25,000 ",Electric,5,220 Nm,50.0,25000.0
 Volkswagen,Golf GTE,Plug-in Hybrid (1.4L I4 Turbo),1395 cc + Electric Motor,204 hp,222 km/h,7.6 sec,"$40,000 ",Hybrid,5,350 Nm,1395.0,40000.0
@@ -349,7 +339,6 @@ Nissan,Patrol Platinum,5.6L V8,5552 cc,400 HP,210 km/h,7.3 sec,"$77,000 ",Petrol
 Nissan,Qashqai,1.3L Turbocharged Inline-4,1332 cc,156 HP,195 km/h,8.9 sec,"$26,000 ",Petrol,5,260 Nm,1332.0,26000.0
 Nissan,Murano,3.5L V6,3498 cc,260 HP,210 km/h,7.5 sec,"$39,000 ",Petrol,5,325 Nm,3498.0,39000.0
 Nissan,Maxima Platinum,3.5L V6,3498 cc,300 HP,220 km/h,6.2 sec,"$45,000 ",Petrol,5,353 Nm,3498.0,45000.0
-Nissan,Armada,5.6L V8,5552 cc,400 HP,210 km/h,6.5 sec,"$51,000 ",Petrol,8,560 Nm,5552.0,51000.0
 Nissan,Kicks,1.6L Inline-4,1598 cc,122 HP,180 km/h,10.7 sec,"$20,000 ",Petrol,5,154 Nm,1598.0,20000.0
 Nissan,X-Trail,1.5L Turbocharged Inline-3,1498 cc,201 HP,200 km/h,8.0 sec,"$29,000 ",Hybrid,5,305 Nm,1498.0,29000.0
 Nissan,Z (Fairlady Z),3.0L Twin-Turbo V6,2997 cc,400 HP,250 km/h,4.5 sec,"$40,000 ",Petrol,2,475 Nm,2997.0,40000.0
@@ -376,7 +365,6 @@ Nissan,March,1.2L Inline-3,1198 cc,79 HP,170 km/h,13.7 sec,"$12,000 ",Petrol,5,1
 Nissan,Rogue Sport,2.0L Inline-4,1997 cc,141 HP,190 km/h,9.8 sec,"$24,960 ",Petrol,5,199 Nm,1997.0,24960.0
 Nissan,X-Trail Hybrid,2.0L Inline-4 Hybrid,1997 cc,179 HP,180 km/h,9.4 sec,"$28,500 ",Hybrid,5,207 Nm,1997.0,28500.0
 Nissan,Pathfinder Rock Creek,3.5L V6,3498 cc,284 HP,190 km/h,7.4 sec,"$42,820 ",Petrol,7,351 Nm,3498.0,42820.0
-Nissan,Armada Platinum,5.6L V8,5552 cc,400 HP,210 km/h,6.5 sec,"$65,300 ",Petrol,8,560 Nm,5552.0,65300.0
 Nissan,Terrano XL,1.6L Inline-4,1598 cc,104 HP,165 km/h,12.5 sec,"$14,000 ",Petrol,5,145 Nm,1598.0,14000.0
 Nissan,370Z NISMO,3.7L V6,3696 cc,350 HP,250 km/h,5.2 sec,"$45,790 ",Petrol,2,374 Nm,3696.0,45790.0
 Nissan,Ariya E-4ORCE,Dual Electric Motors,87 kWh,389 HP,200 km/h,5.1 sec,"$60,000 ",Electric,5,600 Nm,87.0,60000.0
@@ -412,7 +400,6 @@ Nissan,Fairlady Z Heritage,3.0L Twin-Turbo V6,2997 cc,400 HP,250 km/h,4.2 sec,"$
 Nissan,Skyline GT-R R34,2.6L Twin-Turbo Inline-6,2568 cc,276 HP,250 km/h,5.6 sec,"$70,000 ",Petrol,4,392 Nm,2568.0,70000.0
 Nissan,Ariya Premiere,Dual Electric Motors,87 kWh,389 HP,200 km/h,5.1 sec,"$67,000 ",Electric,5,600 Nm,87.0,67000.0
 Nissan,Infiniti QX55*,2.0L VC-Turbo Inline-4,1997 cc,268 HP,230 km/h,6.5 sec,"$50,000 ",Petrol,5,380 Nm,1997.0,50000.0
-Nissan,NV350 Caravan,2.5L Inline-4 Diesel,2488 cc,129 HP,155 km/h,12.5 sec,"$28,000 ",Diesel,8,356 Nm,2488.0,28000.0
 Nissan,Navara,2.3L Inline-4 Diesel,2298 cc,190 HP,180 km/h,10.2 sec,"$32,000 ",Diesel,5,450 Nm,2298.0,32000.0
 Nissan,Titan XD,5.6L V8,5552 cc,400 HP,195 km/h,6.9 sec,"$55,000 ",Petrol,6,560 Nm,5552.0,55000.0
 Nissan,Evalia,1.5L Inline-4 Diesel,1461 cc,85 HP,140 km/h,15.0 sec,"$25,000 ",Diesel,7,200 Nm,1461.0,25000.0
@@ -616,15 +603,12 @@ Tata Motors,Sumo Grande,2.2L Dicor Diesel,2179 cc,118 hp,140 km/h,15 sec,"$16,50
 Tata Motors,Nexon EV Prime,Permanent Magnet Synchronous,30.2 kWh,129 hp,120 km/h,9.4 sec,"$22,000 ",Electric,5,245 Nm,302.0,22000.0
 Tata Motors,Tiago EV,Permanent Magnet Synchronous,24 kWh,74 hp,120 km/h,5.7 sec,"$11,000 ",Electric,5,114 Nm,24.0,11000.0
 Tesla,Model S,Dual Electric Motors,100 kWh,670 hp,250 km/h,3.1 sec,"$88,490 ",Electric,5,967 Nm,100.0,88490.0
-Tesla,Model S Plaid,Tri Electric Motors,100 kWh,"1,020 hp",322 km/h,2.1 sec,"$108,490 ",Electric,5,"1,400 Nm",100.0,108490.0
 Tesla,Model 3,Single Electric Motor (RWD),60 kWh,283 hp,225 km/h,5.8 sec,"$40,240 ",Electric,5,420 Nm,60.0,40240.0
 Tesla,Model 3 Performance,Dual Electric Motors (AWD),82 kWh,450 hp,261 km/h,3.1 sec,"$53,240 ",Electric,5,660 Nm,82.0,53240.0
 Tesla,Model X,Dual Electric Motors (AWD),100 kWh,670 hp,250 km/h,3.8 sec,"$98,490 ",Electric,7,967 Nm,100.0,98490.0
-Tesla,Model X Plaid,Tri Electric Motors,100 kWh,"1,020 hp",262 km/h,2.6 sec,"$113,490 ",Electric,6,"1,400 Nm",100.0,113490.0
 Tesla,Model Y,Single Electric Motor (RWD),75 kWh,346 hp,217 km/h,5.0 sec,"$47,490 ",Electric,5,498 Nm,75.0,47490.0
 Tesla,Model Y Long Range,Dual Electric Motors (AWD),82 kWh,384 hp,217 km/h,4.8 sec,"$50,490 ",Electric,5,559 Nm,82.0,50490.0
 Tesla,Cybertruck,Tri Electric Motors,200 kWh,800 hp,209 km/h,2.9 sec,"$69,900 ",Electric,6,"1,355 Nm",200.0,69900.0
-Tesla,Roadster 2,Quad Electric Motors,200 kWh,"1,288 hp",402 km/h,1.9 sec,"$200,000 ",Electric,4,"10,000 Nm",200.0,200000.0
 Jeep,Wrangler,3.6L V6 Pentastar Gasoline,3600 cc,285 hp,180 km/h,6.8 sec,"$35,195 ",Petrol,4,353 Nm,3600.0,35195.0
 Jeep,Wrangler Rubicon,2.0L Turbo I4 Gasoline,2000 cc,270 hp,180 km/h,7.1 sec,"$42,100 ",Petrol,4,400 Nm,2000.0,42100.0
 Jeep,Grand Cherokee,3.6L V6 Pentastar Gasoline,3600 cc,293 hp,209 km/h,7.0 sec,"$41,530 ",Petrol,5,352 Nm,3600.0,41530.0
@@ -633,8 +617,6 @@ Jeep,Cherokee,2.4L I4 Tigershark Gasoline,2400 cc,180 hp,195 km/h,8.5 sec,"$37,6
 Jeep,Compass,2.0L Turbo Gasoline,2000 cc,200 hp,200 km/h,7.8 sec,"$31,590 ",Petrol,5,320 Nm,2000.0,31590.0
 Jeep,Renegade,1.3L Turbo I4 Gasoline,1300 cc,177 hp,200 km/h,8.7 sec,"$28,345 ",Petrol,5,285 Nm,1300.0,28345.0
 Jeep,Gladiator,3.6L V6 Pentastar Gasoline,3600 cc,285 hp,177 km/h,8.1 sec,"$38,775 ",Petrol,5,353 Nm,3600.0,38775.0
-Jeep,Wagoneer,5.7L V8 Gasoline with eTorque,5700 cc,392 hp,190 km/h,7.4 sec,"$63,595 ",Petrol,8,548 Nm,5700.0,63595.0
-Jeep,Grand Wagoneer,6.4L V8 Gasoline,6400 cc,471 hp,190 km/h,6.0 sec,"$91,495 ",Petrol,8,617 Nm,6400.0,91495.0
 Jeep,Grand Cherokee 4xe,2.0L Turbo PHEV,17.3 kWh,375 hp,210 km/h,6.0 sec,"$59,865 ",Hybrid,5,637 Nm,173.0,59865.0
 Jeep,Wrangler 4xe,2.0L Turbo PHEV,17.3 kWh,375 hp,180 km/h,6.4 sec,"$50,695 ",Hybrid,5,637 Nm,173.0,50695.0
 Jeep,Compass 4xe,1.3L Turbo PHEV,11.4 kWh,240 hp,200 km/h,7.3 sec,"$46,500 ",Hybrid,5,270 Nm,114.0,46500.0
@@ -667,7 +649,6 @@ Chevrolet,Traverse,3.6L V6 Gasoline,3600 cc,310 hp,210 km/h,7.0 sec,"$35,915 ",P
 Chevrolet,Equinox,1.5L Turbo Inline-4 Gasoline,1500 cc,170 hp,200 km/h,8.9 sec,"$26,600 ",Petrol,5,275 Nm,1500.0,26600.0
 Chevrolet,Blazer,3.6L V6 Gasoline,3600 cc,308 hp,220 km/h,6.6 sec,"$44,000 ",Petrol,5,366 Nm,3600.0,44000.0
 Chevrolet,Tahoe,5.3L V8 Gasoline,5300 cc,355 hp,200 km/h,7.5 sec,"$56,995 ",Petrol,7,519 Nm,5300.0,56995.0
-Chevrolet,Suburban,5.3L V8 Gasoline,5300 cc,355 hp,190 km/h,7.6 sec,"$59,900 ",Petrol,8,519 Nm,5300.0,59900.0
 Chevrolet,Colorado,2.7L Turbo Inline-4 Gasoline,2700 cc,310 hp,190 km/h,6.8 sec,"$30,695 ",Petrol,5,583 Nm,2700.0,30695.0
 Chevrolet,Silverado 1500,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.0 sec,"$42,795 ",Petrol,6,519 Nm,5300.0,42795.0
 Chevrolet,Silverado 2500HD,6.6L V8 Gasoline,6600 cc,401 hp,170 km/h,8.0 sec,"$41,500 ",Petrol,6,629 Nm,6600.0,41500.0
@@ -696,7 +677,6 @@ Chevrolet,Trax LT,1.2L Turbo Inline-3 Gasoline,1200 cc,137 hp,200 km/h,9.2 sec,"
 Chevrolet,Equinox LT,1.5L Turbo Inline-4 Gasoline,1500 cc,170 hp,200 km/h,8.9 sec,"$28,400 ",Petrol,5,275 Nm,1500.0,28400.0
 Chevrolet,Silverado 3500HD High Country,6.6L V8 Diesel,6600 cc,445 hp,160 km/h,8.5 sec,"$75,700 ",Diesel,6,1234 Nm,6600.0,75700.0
 Chevrolet,Colorado WT,2.7L Turbo Inline-4 Gasoline,2700 cc,310 hp,190 km/h,6.9 sec,"$29,200 ",Petrol,5,583 Nm,2700.0,29200.0
-Chevrolet,Suburban High Country,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,7.0 sec,"$82,400 ",Petrol,8,624 Nm,6200.0,82400.0
 Chevrolet,Silverado Custom,4.3L V6 Gasoline,4300 cc,285 hp,180 km/h,8.5 sec,"$33,900 ",Petrol,6,413 Nm,4300.0,33900.0
 Chevrolet,Spark LS,1.4L Inline-4 Gasoline,1400 cc,98 hp,180 km/h,10.9 sec,"$14,395 ",Petrol,5,127 Nm,1400.0,14395.0
 Chevrolet,Traverse LT,3.6L V6 Gasoline,3600 cc,310 hp,210 km/h,7.1 sec,"$37,200 ",Petrol,7,360 Nm,3600.0,37200.0
@@ -706,27 +686,20 @@ Chevrolet,Equinox RS,1.5L Turbo Inline-4 Gasoline,1500 cc,170 hp,200 km/h,8.8 se
 Chevrolet,Silverado 1500 Custom,4.3L V6 Gasoline,4300 cc,285 hp,180 km/h,8.6 sec,"$34,900 ",Petrol,6,413 Nm,4300.0,34900.0
 Chevrolet,Silverado 2500HD LTZ,6.6L V8 Diesel,6600 cc,445 hp,160 km/h,8.4 sec,"$56,400 ",Diesel,6,1234 Nm,6600.0,56400.0
 Chevrolet,Tahoe RST,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.4 sec,"$64,100 ",Petrol,7,519 Nm,5300.0,64100.0
-Chevrolet,Suburban LT,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,5.1 sec,"$64,400 ",Petrol,8,519 Nm,5300.0,64400.0
 Chevrolet,Bolt EV Premier,Single Electric Motor,66 kWh,200 hp,150 km/h,6.5 sec,"$31,700 ",Electric,5,360 Nm,66.0,31700.0
-Chevrolet,Tahoe LS,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.5 sec,"$56,995 ",Petrol,8,519 Nm,5300.0,56995.0
-Chevrolet,Tahoe LT,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.4 sec,"$62,495 ",Petrol,8,519 Nm,5300.0,62495.0
 Chevrolet,Tahoe RST,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.4 sec,"$64,100 ",Petrol,7,519 Nm,5300.0,64100.0
 Chevrolet,Tahoe Z71,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.6 sec,"$66,700 ",Petrol,7,519 Nm,5300.0,66700.0
 Chevrolet,Tahoe Premier,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,6.8 sec,"$71,600 ",Petrol,7,624 Nm,6200.0,71600.0
 Chevrolet,Tahoe High Country,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,6.7 sec,"$76,700 ",Petrol,7,624 Nm,6200.0,76700.0
-Chevrolet,Tahoe Midnight Edition,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.5 sec,"$65,500 ",Petrol,8,519 Nm,5300.0,65500.0
 Chevrolet,Tahoe Sport Edition,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,6.8 sec,"$70,000 ",Petrol,7,624 Nm,6200.0,70000.0
 GMC,Terrain,1.5L Turbo 4-cylinder,1500 cc,175 hp,190 km/h,9.5 sec,"$29,900 ",Petrol,5,275 Nm,1500.0,29900.0
 GMC,Acadia,2.0L Turbo 4-cylinder,2000 cc,228 hp,200 km/h,7.8 sec,"$36,800 ",Petrol,7,350 Nm,2000.0,36800.0
-GMC,Yukon,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.4 sec,"$57,400 ",Petrol,8,519 Nm,5300.0,57400.0
-GMC,Yukon XL,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,6.9 sec,"$61,100 ",Petrol,8,624 Nm,6200.0,61100.0
 GMC,Canyon,2.7L Turbo 4-cylinder,2700 cc,310 hp,190 km/h,7.6 sec,"$36,900 ",Petrol,5,583 Nm,2700.0,36900.0
 GMC,Sierra 1500,5.3L V8 Gasoline,5300 cc,355 hp,180 km/h,7.3 sec,"$37,100 ",Petrol,6,519 Nm,5300.0,37100.0
 GMC,Sierra 2500HD,6.6L V8 Diesel,6600 cc,401 hp,175 km/h,7.5 sec,"$43,900 ",Diesel,6,629 Nm,6600.0,43900.0
 GMC,Sierra 3500HD,6.6L V8 Diesel,6600 cc,445 hp,175 km/h,7.4 sec,"$49,000 ",Diesel,6,1234 Nm,6600.0,49000.0
 GMC,Hummer EV Pickup,Dual-Motor Electric,212 kWh,625 hp,170 km/h,3.0 sec,"$108,700 ",Electric,5,1000+ Nm,212.0,108700.0
 GMC,Hummer EV SUV,Dual-Motor Electric,212 kWh,625 hp,170 km/h,3.5 sec,"$105,600 ",Electric,5,1000+ Nm,212.0,105600.0
-GMC,Yukon Denali,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,6.8 sec,"$72,800 ",Petrol,8,624 Nm,6200.0,72800.0
 GMC,Sierra Denali,6.2L V8 Gasoline,6200 cc,420 hp,190 km/h,6.7 sec,"$66,800 ",Petrol,6,624 Nm,6200.0,66800.0
 GMC,Terrain AT4,1.5L Turbo 4-cylinder,1500 cc,175 hp,190 km/h,9.6 sec,"$36,500 ",Petrol,5,275 Nm,1500.0,36500.0
 GMC,Acadia AT4,3.6L V6 Gasoline,3600 cc,310 hp,210 km/h,7.6 sec,"$41,400 ",Petrol,6,366 Nm,3600.0,41400.0
@@ -735,11 +708,8 @@ GMC,Sierra 2500HD Denali,6.6L V8 Diesel,6600 cc,401 hp,175 km/h,7.5 sec,"$72,200
 GMC,Sierra Elevation,2.7L Turbo 4-cylinder,2700 cc,310 hp,190 km/h,7.6 sec,"$45,000 ",Petrol,5,583 Nm,2700.0,45000.0
 GMC,Canyon AT4,2.7L Turbo 4-cylinder,2700 cc,310 hp,190 km/h,7.5 sec,"$43,900 ",Petrol,5,583 Nm,2700.0,43900.0
 GMC,Canyon Denali,2.7L Turbo 4-cylinder,2700 cc,310 hp,190 km/h,7.5 sec,"$48,000 ",Petrol,5,583 Nm,2700.0,48000.0
-GMC,Yukon XL Denali Ultimate,6.2L V8 Gasoline,6200 cc,420 hp,200 km/h,6.7 sec,"$93,800 ",Petrol,8,624 Nm,6200.0,93800.0
 GMC,Terrain Denali,1.5L Turbo 4-cylinder,1500 cc,175 hp,190 km/h,9.5 sec,"$38,600 ",Petrol,5,275 Nm,1500.0,38600.0
 GMC,Acadia Denali,3.6L V6 engine,"3,564 cc",310 hp,210 km/h,6.5 sec,"$54,300 ",Petrol,7,366 Nm,3564.0,54300.0
-GMC,Yukon AT4,5.3L V8 engine,"5,327 cc",355 hp,210 km/h,7.1 sec,"$71,505 ",Petrol,8,519 Nm,5327.0,71505.0
-GMC,Yukon XL AT4,5.3L V8 engine,"5,327 cc",355 hp,210 km/h,7.3 sec,"$73,305 ",Petrol,8,519 Nm,5327.0,73305.0
 GMC,Sierra 1500 Elevation,2.7L Turbo engine,"2,713 cc",310 hp,180 km/h,7.0 sec,"$52,000 ",Petrol,5,569 Nm,2713.0,52000.0
 GMC,Sierra 1500 SLT,5.3L V8 engine,"5,327 cc",355 hp,180 km/h,6.8 sec,"$56,000 ",Petrol,5,519 Nm,5327.0,56000.0
 GMC,Sierra 2500HD AT4,6.6L V8 engine,"6,600 cc",401 hp,170 km/h,7.5 sec,"$70,000 ",Petrol,5,629 Nm,6600.0,70000.0
@@ -750,31 +720,21 @@ GMC,Sierra 1500 Denali Ultimate,6.2L V8 engine,"6,162 cc",420 hp,200 km/h,5.8 se
 GMC,Yukon XL Denali Reserve,6.2L V8 engine,"6,162 cc",420 hp,210 km/h,6.0 sec,"$82,000 ",Petrol,7,624 Nm,6162.0,82000.0
 GMC,Terrain Elevation Edition,1.5L Turbocharged I4 engine,"1,490 cc",170 hp,200 km/h,9.3 sec,"$28,700 ",Petrol,5,275 Nm,1490.0,28700.0
 GMC,Acadia Black Edition,3.6L V6 engine,"3,564 cc",310 hp,210 km/h,6.5 sec,"$45,000 ",Petrol,7,366 Nm,3564.0,45000.0
-GMC,Hummer EV SUV Edition 1,"Electric motors with up to 11,500 lb-ft torque",200 kWh,Up to 830 hp,170 km/h,3.5 sec,"$96,550 ",Electric,5,"15,590 Nm",200.0,96550.0
-GMC,Hummer EV Pickup Edition 1,"Electric motors with up to 11,500 lb-ft torque",200 kWh,"Up to 1,000 hp",170 km/h,3.0 sec,"$96,550 ",Electric,5,"15,590 Nm",200.0,96550.0
 GMC,Sierra Denali CarbonPro,6.2L V8 engine,"6,162 cc",420 hp,200 km/h,5.8 sec,"$65,000 ",Petrol,5,624 Nm,6162.0,65000.0
-GMC,Yukon Denali Performance,6.2L V8 engine,"6,162 cc",420 hp,210 km/h,6.0 sec,"$76,805 ",Petrol,8,624 Nm,6162.0,76805.0
 GMC,Sierra 2500HD Denali Black Edition,6.6L V8 engine,"6,600 cc",401 hp,170 km/h,7.5 sec,"$75,000 ",Petrol,5,629 Nm,6600.0,75000.0
 GMC,Canyon AT4X,3.6L V6 engine,"3,564 cc",308 hp,180 km/h,6.9 sec,"$50,000 ",Petrol,5,373 Nm,3564.0,50000.0
-GMC,Yukon XL SLT,5.3L V8 engine,"5,327 cc",355 hp,210 km/h,7.3 sec,"$65,000 ",Petrol,8,519 Nm,5327.0,65000.0
 GMC,Sierra 1500 Pro,4.3L V6 engine,"4,300 cc",285 hp,180 km/h,7.5 sec,"$37,700 ",Petrol,3,413 Nm,4300.0,37700.0
 GMC,Sierra 2500HD Pro,6.6L V8 engine,"6,600 cc",401 hp,170 km/h,7.7 sec,"$60,000 ",Petrol,3,629 Nm,6600.0,60000.0
 GMC,Sierra 3500HD Pro,6.6L V8 engine,"6,600 cc",401 hp,170 km/h,7.8 sec,"$62,000 ",Petrol,3,629 Nm,6600.0,62000.0
 GMC,Terrain SLT,1.5L Turbocharged I4 engine,"1,490 cc",170 hp,200 km/h,9.4 sec,"$31,000 ",Petrol,5,275 Nm,1490.0,31000.0
 GMC,Acadia SLE,3.6L V6 engine,"3,564 cc",310 hp,210 km/h,6.6 sec,"$40,000 ",Petrol,7,366 Nm,3564.0,40000.0
 GMC,Canyon SLT,2.5L I4 engine,"2,488 cc",200 hp,175 km/h,8.6 sec,"$38,000 ",Petrol,5,259 Nm,2488.0,38000.0
-GMC,Yukon XL Elevation,5.3L V8 engine,"5,327 cc",355 hp,210 km/h,7.4 sec,"$75,000 ",Petrol,8,519 Nm,5327.0,75000.0
 GMC,Sierra 1500 AT4X,6.2L V8 engine,"6,162 cc",420 hp,200 km/h,5.9 sec,"$82,000 ",Petrol,5,624 Nm,6162.0,82000.0
-GMC,Hummer EV SUV Extreme Off-Road,"Electric motors with up to 11,500 lb-ft torque",200 kWh,Up to 830 hp,170 km/h,3.6 sec,"$110,000 ",Electric,5,"15,590 Nm",200.0,110000.0
 GMC,Sierra EV Denali,Electric motors with advanced AWD,200 kWh,Up to 754 hp,170 km/h,4.5 sec,"$108,700 ",Electric,5,"1,064 Nm",200.0,108700.0
-GMC,Hummer EV Omega Edition,"Electric motors with up to 11,500 lb-ft torque",200 kWh,"Up to 1,000 hp",170 km/h,3.0 sec,"$112,700 ",Electric,5,"15,590 Nm",200.0,112700.0
 GMC,Canyon AT4X Edition 1,3.6L V6 engine,"3,564 cc",308 hp,180 km/h,6.8 sec,"$55,000 ",Petrol,5,373 Nm,3564.0,55000.0
-GMC,Yukon Denali Ultimate Black,6.2L V8 engine,"6,162 cc",420 hp,210 km/h,6.0 sec,"$90,000 ",Petrol,8,624 Nm,6162.0,90000.0
 GMC,Sierra HD Denali Reserve,6.6L V8 engine,"6,600 cc",401 hp,170 km/h,7.5 sec,"$85,000 ",Petrol,5,629 Nm,6600.0,85000.0
 GMC,Acadia Denali Ultimate,3.6L V6 engine,"3,564 cc",310 hp,210 km/h,6.5 sec,"$60,000 ",Petrol,7,366 Nm,3564.0,60000.0
 GMC,Terrain All-Terrain Edition,1.5L Turbocharged I4 engine,"1,490 cc",170 hp,200 km/h,9.3 sec,"$35,000 ",Petrol,5,275 Nm,1490.0,35000.0
-GMC,Yukon Trailering Edition,5.3L V8 engine,"5,327 cc",355 hp,210 km/h,7.5 sec,"$78,000 ",Petrol,8,519 Nm,5327.0,78000.0
-GMC,Hummer EV Adventure Series,"Electric motors with up to 11,500 lb-ft torque",200 kWh,Up to 830 hp,170 km/h,3.6 sec,"$105,000 ",Electric,5,"15,590 Nm",200.0,105000.0
 Kia,Rio,1.6L 4-Cylinder,1591 cc,120 hp,180 km/h,10.3 sec,"$17,000 ",Petrol,5,151 Nm,1591.0,17000.0
 Kia,Rio 5-Door,1.6L 4-Cylinder,1591 cc,120 hp,180 km/h,10.3 sec,"$18,000 ",Petrol,5,151 Nm,1591.0,18000.0
 Kia,Seltos Nightfall Edition,1.6L Turbocharged 4-Cylinder,1591 cc,175 hp,210 km/h,7.5 sec,"$28,000 ",Petrol,5,264 Nm,1591.0,28000.0
@@ -789,7 +749,6 @@ Kia,Soul Turbo,1.6L Turbocharged 4-Cylinder,1591 cc,201 hp,200 km/h,6.5 sec,"$28
 Kia,Seltos SX,1.6L Turbocharged 4-Cylinder,1591 cc,175 hp,210 km/h,7.5 sec,"$28,500 ",Petrol,5,264 Nm,1591.0,28500.0
 Kia,Stinger Scorpion Edition,2.5L Turbocharged 4-Cylinder,2500 cc,300 hp,270 km/h,5.0 sec,"$55,000 ",Petrol,5,422 Nm,2500.0,55000.0
 Kia,Sorento Hybrid SX Prestige,1.6L Hybrid Turbocharged 4-Cylinder,1591 cc,227 hp,200 km/h,7.9 sec,"$47,000 ",Hybrid,7,352 Nm,1591.0,47000.0
-Kia,Carnival EX,3.5L V6,3500 cc,290 hp,220 km/h,8.0 sec,"$42,500 ",Petrol,8,355 Nm,3500.0,42500.0
 Kia,Telluride Nightfall Edition,3.8L V6,3778 cc,291 hp,240 km/h,7.0 sec,"$51,000 ",Petrol,7,355 Nm,3778.0,51000.0
 Peugeot,508 Plug-In Hybrid,Hybrid I4 + Electric Motor,"1,598 cc (petrol) + Electric Motor",225 hp,210 km/h,7.5 sec,"$44,000 ",Hybrid,5,360 Nm,1598.0,44000.0
 Kia,EV6 First Edition,Electric Motor,77.4 kWh,320 hp,230 km/h,5.0 sec,"$58,000 ",Electric,5,450 Nm,774.0,58000.0
@@ -802,7 +761,6 @@ Kia,Telluride EX,3.8L V6,3778 cc,291 hp,240 km/h,7.0 sec,"$44,000 ",Petrol,7,355
 Kia,Soul EX,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.5 sec,"$22,000 ",Petrol,5,179 Nm,1999.0,22000.0
 Kia,Forte FE,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.2 sec,"$18,500 ",Petrol,5,179 Nm,1999.0,18500.0
 Kia,K5 GT-Line,1.6L Turbocharged 4-Cylinder,1591 cc,180 hp,220 km/h,7.8 sec,"$29,000 ",Petrol,5,264 Nm,1591.0,29000.0
-Kia,Carnival LXS,3.5L V6,3500 cc,290 hp,220 km/h,8.0 sec,"$39,500 ",Petrol,8,355 Nm,3500.0,39500.0
 Kia,EV6 Light,Electric Motor,77.4 kWh,225 hp,190 km/h,5.2 sec,"$46,000 ",Electric,5,350 Nm,774.0,46000.0
 Kia,Niro EX,1.6L 4-Cylinder Hybrid,1591 cc,139 hp,180 km/h,10.5 sec,"$30,000 ",Hybrid,5,265 Nm,1591.0,30000.0
 Kia,Stinger GT,3.3L Turbocharged V6,3300 cc,365 hp,270 km/h,4.7 sec,"$51,500 ",Petrol,5,510 Nm,3300.0,51500.0
@@ -811,7 +769,6 @@ Kia,Telluride SX Prestige,3.8L V6,3778 cc,291 hp,240 km/h,7.0 sec,"$52,000 ",Pet
 Peugeot,508 Hybrid4,Hybrid I4 + Electric Motor,"1,598 cc (petrol) + Electric Motor",300 hp,235 km/h,6.0 sec,"$47,000 ",Hybrid,5,520 Nm,1598.0,47000.0
 Kia,EV6 GT Performance,Electric Motor,77.4 kWh,577 hp,260 km/h,3.5 sec,"$65,000 ",Electric,5,740 Nm,774.0,65000.0
 Kia,Niro SX Touring,1.6L 4-Cylinder Hybrid,1591 cc,139 hp,180 km/h,10.5 sec,"$34,500 ",Hybrid,5,265 Nm,1591.0,34500.0
-Kia,Carnival SX Prestige,3.5L V6,3500 cc,290 hp,220 km/h,8.0 sec,"$47,000 ",Petrol,8,355 Nm,3500.0,47000.0
 Kia,Seltos SX Turbo,1.6L Turbocharged 4-Cylinder,1591 cc,175 hp,210 km/h,7.5 sec,"$32,000 ",Petrol,5,264 Nm,1591.0,32000.0
 Kia,Forte EX Premium,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.2 sec,"$22,500 ",Petrol,5,179 Nm,1999.0,22500.0
 Kia,Soul EX Designer Edition,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.5 sec,"$23,500 ",Petrol,5,179 Nm,1999.0,23500.0
@@ -822,7 +779,6 @@ Kia,Seltos LX,2.0L 4-Cylinder,1999 cc,146 hp,190 km/h,9.2 sec,"$23,000 ",Petrol,
 Peugeot,3008 Hybrid4,Hybrid I4+ Electric Motor,"1,599 cc (Petrol) + Electric Motor",300 hp,235 km/h,6.0 sec,"$45,000 ",Hybrid,5,520 Nm,1599.0,45000.0
 Kia,Sorento Hybrid EX,1.6L Hybrid Turbocharged 4-Cylinder,1591 cc,227 hp,200 km/h,7.9 sec,"$47,000 ",Hybrid,7,352 Nm,1591.0,47000.0
 Kia,Telluride LX,3.8L V6,3778 cc,291 hp,240 km/h,7.0 sec,"$41,500 ",Petrol,7,355 Nm,3778.0,41500.0
-Kia,Carnival MPV EX,3.5L V6,3500 cc,290 hp,220 km/h,8.0 sec,"$43,500 ",Petrol,8,355 Nm,3500.0,43500.0
 Kia,EV6 AWD GT-Line,Electric Motor,77.4 kWh,320 hp,230 km/h,5.0 sec,"$60,000 ",Electric,5,450 Nm,774.0,60000.0
 Kia,Forte GT Turbo,1.6L Turbocharged 4-Cylinder,1591 cc,201 hp,200 km/h,6.5 sec,"$25,500 ",Petrol,5,264 Nm,1591.0,25500.0
 Kia,Soul GT Designer Edition,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.5 sec,"$23,000 ",Petrol,5,179 Nm,1999.0,23000.0
@@ -830,18 +786,10 @@ Kia,Seltos X-Line Turbo,1.6L Turbocharged 4-Cylinder,1591 cc,175 hp,210 km/h,7.5
 Peugeot,e-2008 GT,Electric Motor,50 kWh,136 hp,200 km/h,8.5 sec,"$40,000 ",Electric,5,260 Nm,50.0,40000.0
 Kia,Telluride Limited Edition,3.8L V6,3778 cc,291 hp,240 km/h,7.0 sec,"$53,000 ",Petrol,7,355 Nm,3778.0,53000.0
 Kia,Stinger GT-Line,2.5L Turbocharged 4-Cylinder,2500 cc,300 hp,270 km/h,5.0 sec,"$50,000 ",Petrol,5,422 Nm,2500.0,50000.0
-Kia,Carnival Special Edition,3.5L V6,3500 cc,290 hp,220 km/h,8.0 sec,"$45,500 ",Petrol,8,355 Nm,3500.0,45500.0
 Kia,Niro SX Hybrid,1.6L Hybrid Turbocharged 4-Cylinder,1591 cc,139 hp,180 km/h,10.5 sec,"$36,000 ",Hybrid,5,265 Nm,1591.0,36000.0
 Kia,EV6 First Edition AWD,Electric Motor,77.4 kWh,320 hp,230 km/h,5.0 sec,"$62,000 ",Electric,5,450 Nm,774.0,62000.0
 Kia,Sorento X-Pro Hybrid,1.6L Hybrid Turbocharged 4-Cylinder,1591 cc,227 hp,200 km/h,7.8 sec,"$49,000 ",Hybrid,7,352 Nm,1591.0,49000.0
 Kia,Forte Limited Edition,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.2 sec,"$22,500 ",Petrol,5,179 Nm,1999.0,22500.0
-Volvo,Volvo FH,13.0L I6 Turbo Diesel,13000 cc,540 hp,120 km/h,15.0 sec,"$120,000 ",Diesel,2,2600 Nm,13000.0,120000.0
-Volvo,Volvo FH16,16.1L I6 Turbo Diesel,16100 cc,750 hp,120 km/h,14.5 sec,"$160,000 ",Diesel,2,3500 Nm,16100.0,160000.0
-Volvo,Volvo FM,12.8L I6 Turbo Diesel,12800 cc,460 hp,110 km/h,16.0 sec,"$100,000 ",Diesel,2,2200 Nm,12800.0,100000.0
-Volvo,Volvo FMX,13.0L I6 Turbo Diesel,13000 cc,500 hp,110 km/h,16.5 sec,"$110,000 ",Diesel,2,2500 Nm,13000.0,110000.0
-Volvo,Volvo VNL,12.8L I6 Turbo Diesel,12800 cc,500 hp,120 km/h,15.0 sec,"$125,000 ",Diesel,2,2400 Nm,12800.0,125000.0
-Volvo,Volvo VNR,12.8L I6 Turbo Diesel,12800 cc,400 hp,110 km/h,17.0 sec,"$95,000 ",Diesel,2,1800 Nm,12800.0,95000.0
-Volvo,Volvo VHD,12.8L I6 Turbo Diesel,12800 cc,500 hp,100 km/h,18.0 sec,"$120,000 ",Diesel,2,2500 Nm,12800.0,120000.0
 Volvo,Volvo FE,7.7L I6 Turbo Diesel,7700 cc,280 hp,90 km/h,20.0 sec,"$85,000 ",Diesel,2,1200 Nm,7700.0,85000.0
 Volvo,Volvo FL,5.1L I4 Turbo Diesel,5100 cc,180 hp,80 km/h,22.0 sec,"$75,000 ",Diesel,2,800 Nm,5100.0,75000.0
 Jaguar Land Rover,Jaguar F-Type,V6 / V8 Petrol,2995 cc (V6),335 hp,260 km/h,5.1 sec,"$70,000 ",Petrol,2,450 Nm,29956.0,70000.0
@@ -930,8 +878,6 @@ Peugeot,208 Allure Premium,Inline-4,"1,199 cc",130 hp,200 km/h,9.5 sec,"$28,000 
 Peugeot,Partner Tepee,Inline-4,"1,560 cc",100 hp,170 km/h,12.0 sec,"$25,000 ",Diesel,5,260 Nm,1560.0,25000.0
 Peugeot,Expert L2H1,Inline-4,"1,997 cc",120 hp,160 km/h,13.0 sec,"$30,000 ",Diesel,3,320 Nm,1997.0,30000.0
 Peugeot,Boxer L2H2,Inline-4,"2,200 cc",130 hp,140 km/h,14.0 sec,"$35,000 ",Diesel,3,350 Nm,2200.0,35000.0
-Peugeot,Partner Electric,Electric Motor,-,136 hp,130 km/h,9.0 sec,"$40,000 ",Electric,5,260 Nm,,40000.0
-Peugeot,Expert Electric,Electric Motor,-,136 hp,130 km/h,9.5 sec,"$45,000 ",Electric,5,260 Nm,,45000.0
 Peugeot,208 PSE (Peugeot Sport Engineered),Hybrid I4,"1,598 cc (petrol) + Electric Motor",225 hp,250 km/h,5.5 sec,"$45,000 ",Hybrid,5,360 Nm,1598.0,45000.0
 Peugeot,308 PSE,Hybrid I4,"1,598 cc (petrol) + Electric Motor",360 hp,250 km/h,5.0 sec,"$55,000 ",Hybrid,5,520 Nm,1598.0,55000.0
 Peugeot,508 PSE,Hybrid I4,"1,598 cc (petrol) + Electric Motor",360 hp,250 km/h,5.2 sec,"$60,000 ",Hybrid,5,520 Nm,1598.0,60000.0
@@ -961,20 +907,13 @@ Ford,Puma,Turbocharged Inline-3,"1,000 cc",123 hp,191 km/h,9.6 sec,"$28,000 ",Pe
 Ford,Territory,Turbocharged Inline-4,"1,500 cc",140 hp,180 km/h,11.0 sec,"$32,000 ",Petrol,5,225 Nm,1500.0,32000.0
 Ford,Everest,Turbocharged Inline-4,"2,000 cc",210 hp,190 km/h,10.5 sec,"$52,000 ",Diesel,7,500 Nm,2000.0,52000.0
 Ford,Flex,Naturally Aspirated V6,"3,500 cc",287 hp,200 km/h,7.9 sec,"$31,000 ",Petrol,7,345 Nm,3500.0,31000.0
-Ford,Transit,EcoBlue Turbo Diesel,"2,000 cc",170 hp,160 km/h,12.0 sec,"$43,455 ",Diesel,2?15,405 Nm,2000.0,43455.0
-Ford,Transit Connect,Inline-4 Gasoline Engine,"2,000 cc",162 hp,175 km/h,10.5 sec,"$29,365 ",Petrol,2?7,200 Nm,2000.0,29365.0
-Ford,F-450 Super Duty,Turbocharged V8 Diesel,"6,700 cc",475 hp,165 km/h,8.5 sec,"$61,625 ",Diesel,2?6,"1,424 Nm",6700.0,61625.0
-Ford,F-550 Super Duty,Turbocharged V8 Diesel,"6,700 cc",475 hp,165 km/h,8.8 sec,"$64,540 ",Diesel,2?6,"1,424 Nm",6700.0,64540.0
 Ford,Mustang Shelby GT500,Supercharged V8,"5,200 cc",760 hp,290 km/h,3.5 sec,"$79,420 ",Petrol,2,847 Nm,5200.0,79420.0
 Ford,Mustang Shelby GT350,Naturally Aspirated V8,"5,200 cc",526 hp,280 km/h,4.0 sec,"$59,140 ",Petrol,2,582 Nm,5200.0,59140.0
 Ford,F-150 Platinum,Turbocharged V6,"3,500 cc",400 hp,180 km/h,6.5 sec,"$64,695 ",Petrol,5,678 Nm,3500.0,64695.0
 Ford,F-150 Limited,Turbocharged V6,"3,500 cc",450 hp,190 km/h,6.1 sec,"$84,910 ",Petrol,5,678 Nm,3500.0,84910.0
 Ford,Explorer Platinum,Turbocharged V6,"3,000 cc",400 hp,230 km/h,6.0 sec,"$56,505 ",Petrol,7,563 Nm,3000.0,56505.0
-Ford,Expedition King Ranch,Turbocharged V6,"3,500 cc",440 hp,210 km/h,6.8 sec,"$79,560 ",Petrol,7?8,691 Nm,3500.0,79560.0
-Ford,Transit Custom,EcoBlue Turbo Diesel,"2,000 cc",130 hp,160 km/h,12.5 sec,"$35,000 ",Diesel,2?9,385 Nm,2000.0,35000.0
 Ford,E-Series Cutaway,V8 Gasoline Engine,"7,300 cc",350 hp,140 km/h,13.0 sec,"$36,000 ",Petrol,2,569 Nm,7300.0,36000.0
 Ford,Transit Chassis Cab,EcoBlue Turbo Diesel,"2,000 cc",170 hp,160 km/h,11.5 sec,"$37,000 ",Diesel,2,405 Nm,2000.0,37000.0
-Ford,Transit Electric (E-Transit),Electric Motor,89 kWh (Electric),266 hp,140 km/h,9.0 sec,"$52,000 ",Electric,2?12,430 Nm,89.0,52000.0
 Ford,Explorer Plug-in Hybrid,V6 Hybrid + Electric Motor,"3,000 cc (petrol) + Electric Motor",457 hp,225 km/h,6.0 sec,"$53,000 ",Hybrid,7,825 Nm,3000.0,53000.0
 Ford,Maverick Hybrid,I4 Hybrid,"2,500 cc (petrol) + Electric Motor",191 hp,180 km/h,7.8 sec,"$25,000 ",Hybrid,5,210 Nm,2500.0,25000.0
 Ford,Mustang (2024),V8 Gasoline Engine,"5,000 cc",450 hp,250 km/h,4.5 sec,"$60,000 ",Petrol,4,570 Nm,5000.0,60000.0
@@ -982,5 +921,4 @@ Ford,Ranger (2024),I4 Turbo Diesel,"2,000 cc",210 hp,180 km/h,8.0 sec,"$40,000 "
 Ford,Escape Plug-in Hybrid (2024),I4 Hybrid,"2,500 cc (petrol) + Electric Motor",221 hp,190 km/h,7.5 sec,"$38,000 ",Hybrid,5,210 Nm,2500.0,38000.0
 Ford,Bronco (2024),V6 EcoBoost,"2,700 cc",310 hp,200 km/h,6.7 sec,"$45,000 ",Petrol,5,542 Nm,2700.0,45000.0
 Ford,Explorer (2024),V6 Turbocharged,"3,000 cc",400 hp,230 km/h,5.9 sec,"$55,000 ",Petrol,7,563 Nm,3000.0,55000.0
-Mazda,RX-Vision Concept,Rotary SkyActiv-R,,400 hp (est.),300 km/h (est.),,N/A (Concept Only),Petrol (Hybrid),2,,,
 Toyota,4Runner (6th Gen),2.4L Turbo I4 (i-FORCE MAX Hybrid),2393 cc + Battery,326 hp,180 km/h,6.8 sec,"$50,000 ",Hybrid,7,630 Nm,2393.0,50000.0

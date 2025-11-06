@@ -1,4 +1,4 @@
-// 主程序入口
+
 
 import { parseRow } from './utils.js';
 import { ScatterPlot } from './scatterPlot.js';
@@ -7,7 +7,7 @@ import { EnhancedGaugePanel } from './gaugePanel.js';
 
 const CSV_PATH = 'Cars Datasets 2025.csv';
 
-// --- 主程序入口 ---
+
 async function main() {
     try {
         const rawData = (await d3.csv(CSV_PATH, parseRow))
@@ -21,12 +21,12 @@ async function main() {
             return;
         }
         
-        // 初始化所有可视化模块
+
         const ribbonVis = new RibbonTrack('#ribbonSVG', rawData);
         const gaugePanel = new EnhancedGaugePanel('#infoView', rawData);
         const scatterPlot = new ScatterPlot('#scatterPlotSVG', rawData);
 
-        // 设置并管理所有控件
+      
         setupControls(rawData, ribbonVis, gaugePanel, scatterPlot);
     } catch (error) {
         console.error('Error loading data:', error);
@@ -36,9 +36,9 @@ async function main() {
 
 main();
 
-// --- 控件管理 ---
+
 function setupControls(data, ribbonVis, gaugePanel, scatterPlot) {
-    // --- 主对比面板的控件 ---
+
     const names = data.map(d => `${d.brand} ${d.model}`);
     const selects = [d3.select('#carSel1'), d3.select('#carSel2'), d3.select('#carSel3')];
     selects.forEach(s => s.selectAll('option').data(names).join('option').text(d => d));
@@ -51,7 +51,6 @@ function setupControls(data, ribbonVis, gaugePanel, scatterPlot) {
         gaugePanel.update(selectedCars, baseline);
     }
 
-    // 设置默认选择的车辆
     if (names.length >= 3) {
         selects[0].property('value', names[0]);
         selects[1].property('value', names[1]);
@@ -67,9 +66,25 @@ function setupControls(data, ribbonVis, gaugePanel, scatterPlot) {
     });
     updateComparisonPanel();
 
-    // --- 散点图的控件 ---
-    console.log('Setting up scatter plot controls...');
+
     
+
+    const dataCountSlider = d3.select('#dataCountSlider');
+    const dataCountValue = d3.select('#dataCountValue');
+    
+
+    const totalCars = data.length;
+    dataCountSlider.attr('max', totalCars);
+    dataCountSlider.property('value', Math.min(100, totalCars));
+    dataCountValue.text(Math.min(100, totalCars));
+    
+    dataCountSlider.on('input', function() {
+        const count = +this.value;
+        dataCountValue.text(count);
+        scatterPlot.setMaxDataCount(count);
+    });
+    
+
     const seatOptions = ['All', ...Array.from(new Set(data.map(d => d.seats))).sort()];
     const seatFilter = d3.select('#seatFilter');
     seatFilter.selectAll('option').data(seatOptions).join('option')
@@ -77,11 +92,10 @@ function setupControls(data, ribbonVis, gaugePanel, scatterPlot) {
         .text(d => d);
     
     seatFilter.on('change', function() {
-        console.log('Seat filter changed to:', this.value);
         scatterPlot.filterBySeats(this.value);
     });
 
-    // 散点图轴选择控件
+
     const xAxisSelect = d3.select('#xAxisSelect');
     const yAxisSelect = d3.select('#yAxisSelect');
     
@@ -104,24 +118,18 @@ function setupControls(data, ribbonVis, gaugePanel, scatterPlot) {
         .attr('value', d => d.value)
         .text(d => d.label);
     
-    // 设置默认值
     xAxisSelect.property('value', 'hp');
     yAxisSelect.property('value', 'price');
-    
-    console.log('Initial axis values:', xAxisSelect.property('value'), yAxisSelect.property('value'));
     
     function updateScatterAxes() {
         const xAxis = xAxisSelect.property('value');
         const yAxis = yAxisSelect.property('value');
-        console.log('Updating scatter axes to:', xAxis, yAxis);
         scatterPlot.changeAxes(xAxis, yAxis);
     }
     
     xAxisSelect.on('change', updateScatterAxes);
     yAxisSelect.on('change', updateScatterAxes);
     
-    // 初始化后立即绘制一次
-    console.log('Triggering initial scatter plot draw...');
     setTimeout(() => {
         updateScatterAxes();
     }, 200);

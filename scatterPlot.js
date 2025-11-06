@@ -1,45 +1,47 @@
-// 简化的散点图模块 - 用于调试
+
 
 import { fmtK, fmtPrice, calculateValueMetrics } from './utils.js';
 
 export class ScatterPlot {
     constructor(selector, data) {
         console.log('ScatterPlot constructor called');
-        console.log('Selector:', selector);
-        console.log('Data length:', data.length);
         
         this.svg = d3.select(selector);
-        console.log('SVG element:', this.svg.node());
-        
         this.data = calculateValueMetrics(data);
         this.currentFilter = 'All';
         this.currentXAxis = 'hp';
         this.currentYAxis = 'price';
+        this.maxDataCount = 100; 
         
-        // 创建品牌颜色映射
+        
         const brands = Array.from(new Set(this.data.map(d => d.brand))).sort();
         this.colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(brands);
-        
-        console.log('Brands:', brands.length);
-        console.log('Color scale created');
         
         this.initVis();
     }
 
     initVis() {
         const vis = this;
-        console.log('initVis called');
-        
-        // 立即尝试绘制
         const container = vis.svg.node()?.parentElement;
-        console.log('Container:', container);
         
         if (container) {
-            // 使用固定尺寸先测试
-            console.log('Drawing with fixed size');
             vis.draw(1200, 500);
-        } else {
-            console.error('Container not found!');
+        }
+    }
+
+   
+    setMaxDataCount(count) {
+        this.maxDataCount = count;
+        console.log('Max data count set to:', count);
+        
+        const container = this.svg.node()?.parentElement;
+        if (container) {
+            const rect = container.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                this.draw(rect.width, rect.height);
+            } else {
+                this.draw(1200, 500);
+            }
         }
     }
 
@@ -61,21 +63,14 @@ export class ScatterPlot {
         const vis = this;
         
         console.log('=== DRAW CALLED ===');
-        console.log('Width:', width, 'Height:', height);
-        console.log('Current X axis:', vis.currentXAxis);
-        console.log('Current Y axis:', vis.currentYAxis);
+        console.log('Max data count:', vis.maxDataCount);
         
-        // 清除现有内容
         vis.svg.selectAll('*').remove();
-        console.log('Cleared SVG');
 
         vis.margin = {top: 40, right: 120, bottom: 60, left: 80};
         vis.width = width - vis.margin.left - vis.margin.right;
         vis.height = height - vis.margin.top - vis.margin.bottom;
         
-        console.log('Inner dimensions:', vis.width, 'x', vis.height);
-        
-        // 设置SVG尺寸
         vis.svg
             .attr('width', width)
             .attr('height', height);
@@ -83,18 +78,22 @@ export class ScatterPlot {
         vis.g = vis.svg.append('g')
             .attr('transform', `translate(${vis.margin.left},${vis.margin.top})`);
         
-        console.log('Created main group');
-        
-        // 过滤有效数据
-        const validData = vis.data.filter(d => 
+        let validData = vis.data.filter(d => 
             isFinite(d[vis.currentXAxis]) && isFinite(d[vis.currentYAxis])
         );
         
-        console.log('Valid data points:', validData.length);
-        console.log('Sample data:', validData.slice(0, 3));
+
+        if (validData.length > vis.maxDataCount) {
+            validData = validData
+                .sort((a, b) => b.performanceScore - a.performanceScore)
+                .slice(0, vis.maxDataCount);
+            
+            console.log(`Sampled ${vis.maxDataCount} cars from ${vis.data.length} total`);
+        }
+        
+        console.log('Displaying data points:', validData.length);
         
         if (validData.length === 0) {
-            console.error('No valid data to display!');
             vis.g.append('text')
                 .attr('x', vis.width / 2)
                 .attr('y', vis.height / 2)
@@ -104,12 +103,9 @@ export class ScatterPlot {
             return;
         }
         
-        // 创建比例尺
+
         const xExtent = d3.extent(validData, d => d[vis.currentXAxis]);
         const yExtent = d3.extent(validData, d => d[vis.currentYAxis]);
-        
-        console.log('X extent:', xExtent);
-        console.log('Y extent:', yExtent);
         
         vis.xScale = d3.scaleLinear()
             .domain([xExtent[0] * 0.9, xExtent[1] * 1.1])
@@ -120,12 +116,7 @@ export class ScatterPlot {
             .domain([yExtent[0] * 0.9, yExtent[1] * 1.1])
             .range([vis.height, 0])
             .nice();
-        
-        console.log('Scales created');
-        console.log('X scale domain:', vis.xScale.domain());
-        console.log('Y scale domain:', vis.yScale.domain());
-        
-        // 添加坐标轴
+
         const xAxis = d3.axisBottom(vis.xScale).ticks(8);
         const yAxis = d3.axisLeft(vis.yScale).ticks(8);
         
@@ -138,9 +129,7 @@ export class ScatterPlot {
             .attr('class', 'axis y-axis')
             .call(yAxis);
         
-        console.log('Axes added');
-        
-        // 添加坐标轴标签
+   
         const xAxisConfig = vis.getAxisConfig(vis.currentXAxis);
         const yAxisConfig = vis.getAxisConfig(vis.currentYAxis);
         
@@ -158,25 +147,15 @@ export class ScatterPlot {
             .attr('y', -55)
             .attr('text-anchor', 'middle')
             .text(yAxisConfig.label);
-        
-        console.log('Labels added');
 
         const tooltip = d3.select('#tooltip');
 
-        // 绘制数据点
-        console.log('Creating dots...');
         vis.dots = vis.g.selectAll('.dot')
             .data(validData)
             .join('circle')
                 .attr('class', 'dot')
-                .attr('cx', d => {
-                    const x = vis.xScale(d[vis.currentXAxis]);
-                    return x;
-                })
-                .attr('cy', d => {
-                    const y = vis.yScale(d[vis.currentYAxis]);
-                    return y;
-                })
+                .attr('cx', d => vis.xScale(d[vis.currentXAxis]))
+                .attr('cy', d => vis.yScale(d[vis.currentYAxis]))
                 .attr('r', 6)
                 .attr('fill', d => vis.colorScale(d.brand))
                 .attr('opacity', d => (vis.currentFilter === 'All' || d.seats === vis.currentFilter) ? 0.7 : 0.05)
@@ -217,19 +196,22 @@ export class ScatterPlot {
                     tooltip.style('opacity', 0);
                 });
         
-        console.log('Dots created:', vis.dots.size());
+        vis.g.append('text')
+            .attr('x', vis.width - 10)
+            .attr('y', 20)
+            .attr('text-anchor', 'end')
+            .attr('fill', 'var(--text-secondary)')
+            .style('font-size', '12px')
+            .text(`Showing ${validData.length} of ${vis.data.length} cars`);
+        
         console.log('=== DRAW COMPLETE ===');
     }
 
     filterBySeats(seatValue) {
         const vis = this;
         vis.currentFilter = seatValue;
-        console.log('Filtering by seats:', seatValue);
         
-        if (!vis.dots) {
-            console.warn('No dots to filter');
-            return;
-        }
+        if (!vis.dots) return;
         
         vis.dots
             .transition()
@@ -240,26 +222,17 @@ export class ScatterPlot {
 
     changeAxes(xAxis, yAxis) {
         const vis = this;
-        console.log('=== CHANGING AXES ===');
-        console.log('New X axis:', xAxis);
-        console.log('New Y axis:', yAxis);
-        
         vis.currentXAxis = xAxis;
         vis.currentYAxis = yAxis;
         
-        // 重新绘制
         const container = vis.svg.node()?.parentElement;
         if (container) {
             const rect = container.getBoundingClientRect();
-            console.log('Container rect:', rect);
             if (rect.width > 0 && rect.height > 0) {
                 vis.draw(rect.width, rect.height);
             } else {
-                console.log('Using fixed size');
                 vis.draw(1200, 500);
             }
-        } else {
-            console.error('Container not found in changeAxes');
         }
     }
 }
