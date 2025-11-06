@@ -157,6 +157,12 @@
             margin-left: auto;
         }
 
+        .control-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
         select, button {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             border: 1px solid var(--border-color);
@@ -346,6 +352,35 @@
             filter: drop-shadow(0 0 12px rgba(255, 8, 68, 0.8));
         }
 
+        .trendline {
+            pointer-events: none;
+        }
+
+        .r2-label {
+            pointer-events: none;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(255, 8, 68, 0.1) 0%, rgba(255, 8, 68, 0.05) 100%);
+            border: 1px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .insight-box h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: var(--accent-red);
+        }
+
+        .insight-box p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
         footer {
             text-align: center;
             padding: 60px 30px 40px;
@@ -408,13 +443,31 @@
 
         <!-- Market Explorer Panel -->
         <section class="main-panel">
-            <h2 class="panel-title">MARKET EXPLORER</h2>
-            <div class="controls no-border">
-                <label for="seatFilter">Filter by Seats:</label>
-                <select id="seatFilter"></select>
+            <h2 class="panel-title">MARKET EXPLORER: Performance vs. Price Analysis</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="xAxisSelect">X-Axis:</label>
+                    <select id="xAxisSelect"></select>
+                </div>
+                <div class="control-group">
+                    <label for="yAxisSelect">Y-Axis:</label>
+                    <select id="yAxisSelect"></select>
+                </div>
+                <div class="control-group">
+                    <label for="seatFilter">Filter by Seats:</label>
+                    <select id="seatFilter"></select>
+                </div>
             </div>
             <div class="scatterplot-container">
                 <svg id="scatterPlotSVG"></svg>
+            </div>
+            <div class="insight-box">
+                <h3>💡 Data Insights</h3>
+                <p><strong>Explore the relationship between performance and price:</strong></p>
+                <p>• Use the X/Y axis controls to compare different metrics (e.g., Horsepower vs. Price)</p>
+                <p>• The trendline and R² value show correlation strength between variables</p>
+                <p>• HP per $1000 and Performance Score reveal the best value-for-money vehicles</p>
+                <p>• Higher R² (closer to 1.0) indicates a stronger linear relationship</p>
             </div>
         </section>
 

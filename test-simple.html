@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Racing-Luxe - Test Version</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #ff0844;
+            text-align: center;
+        }
+        
+        .controls {
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        select {
+            padding: 10px;
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+        
+        label {
+            color: #aaa;
+            margin-right: 10px;
+        }
+        
+        #scatterPlotSVG {
+            background: #1a1a1a;
+            display: block;
+            width: 100%;
+            height: 500px;
+        }
+        
+        .status {
+            padding: 15px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .success { color: #0f0; }
+        .error { color: #f00; }
+        .info { color: #ff0844; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RACING-LUXE - Debug Version</h1>
+        
+        <div class="status" id="status">
+            <div class="info">Loading...</div>
+        </div>
+        
+        <div class="controls">
+            <div>
+                <label for="xAxisSelect">X-Axis:</label>
+                <select id="xAxisSelect">
+                    <option value="hp">Horsepower</option>
+                    <option value="price">Price</option>
+                    <option value="tops">Top Speed</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="yAxisSelect">Y-Axis:</label>
+                <select id="yAxisSelect">
+                    <option value="price" selected>Price</option>
+                    <option value="hp">Horsepower</option>
+                    <option value="tops">Top Speed</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="seatFilter">Seats:</label>
+                <select id="seatFilter">
+                    <option value="All">All</option>
+                </select>
+            </div>
+        </div>
+        
+        <svg id="scatterPlotSVG"></svg>
+    </div>
+
+    <script src="https://unpkg.com/d3@7"></script>
+    <script type="module">
+        const statusDiv = document.getElementById('status');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            statusDiv.appendChild(div);
+            console.log(message);
+        }
+        
+        log('Starting application...', 'info');
+        log('D3 version: ' + d3.version, 'success');
+        
+        // 测试SVG选择
+        const svg = d3.select('#scatterPlotSVG');
+        log('SVG element found: ' + (svg.node() ? 'YES' : 'NO'), svg.node() ? 'success' : 'error');
+        
+        // 加载数据
+        log('Loading CSV data...', 'info');
+        
+        d3.csv('Cars Datasets 2025.csv').then(rawData => {
+            log('CSV loaded: ' + rawData.length + ' rows', 'success');
+            log('Sample row: ' + JSON.stringify(rawData[0]), 'info');
+            
+            // 解析数据
+            const data = rawData.map(d => ({
+                brand: String(d['Company Names'] || '').toUpperCase().trim(),
+                model: String(d['Cars Names'] || '').trim(),
+                hp: +String(d['HorsePower'] || '').replace(/[^0-9.]/g, ''),
+                price: +String(d['Cars Prices'] || '').replace(/[^0-9.]/g, ''),
+                tops: +String(d['Total Speed'] || '').replace(/[^0-9.]/g, ''),
+                seats: String(d['Seats'] || '').trim()
+            })).filter(d => d.model && isFinite(d.hp) && isFinite(d.price));
+            
+            log('Parsed data: ' + data.length + ' valid cars', 'success');
+            log('Sample parsed: ' + JSON.stringify(data[0]), 'info');
+            
+            // 绘制散点图
+            function drawScatter(xKey, yKey) {
+                log(`Drawing scatter: ${xKey} vs ${yKey}`, 'info');
+                
+                svg.selectAll('*').remove();
+                
+                const width = 1200;
+                const height = 500;
+                const margin = {top: 40, right: 40, bottom: 60, left: 80};
+                const innerWidth = width - margin.left - margin.right;
+                const innerHeight = height - margin.top - margin.bottom;
+                
+                svg.attr('width', width).attr('height', height);
+                
+                const g = svg.append('g')
+                    .attr('transform', `translate(${margin.left},${margin.top})`);
+                
+                // 比例尺
+                const xScale = d3.scaleLinear()
+                    .domain(d3.extent(data, d => d[xKey]))
+                    .range([0, innerWidth])
+                    .nice();
+                
+                const yScale = d3.scaleLinear()
+                    .domain(d3.extent(data, d => d[yKey]))
+                    .range([innerHeight, 0])
+                    .nice();
+                
+                // 坐标轴
+                g.append('g')
+                    .attr('transform', `translate(0,${innerHeight})`)
+                    .call(d3.axisBottom(xScale))
+                    .attr('color', '#666');
+                
+                g.append('g')
+                    .call(d3.axisLeft(yScale))
+                    .attr('color', '#666');
+                
+                // 标签
+                g.append('text')
+                    .attr('x', innerWidth / 2)
+                    .attr('y', innerHeight + 50)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#aaa')
+                    .text(xKey.toUpperCase());
+                
+                g.append('text')
+                    .attr('transform', 'rotate(-90)')
+                    .attr('x', -innerHeight / 2)
+                    .attr('y', -60)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#aaa')
+                    .text(yKey.toUpperCase());
+                
+                // 数据点
+                g.selectAll('circle')
+                    .data(data)
+                    .join('circle')
+                    .attr('cx', d => xScale(d[xKey]))
+                    .attr('cy', d => yScale(d[yKey]))
+                    .attr('r', 5)
+                    .attr('fill', '#ff0844')
+                    .attr('opacity', 0.6)
+                    .attr('stroke', 'white')
+                    .attr('stroke-width', 1)
+                    .on('mouseover', function(event, d) {
+                        d3.select(this)
+                            .attr('r', 8)
+                            .attr('opacity', 1);
+                        
+                        log(`${d.brand} ${d.model}: HP=${d.hp}, Price=$${d.price}`, 'info');
+                    })
+                    .on('mouseout', function() {
+                        d3.select(this)
+                            .attr('r', 5)
+                            .attr('opacity', 0.6);
+                    });
+                
+                log(`Drew ${data.length} points`, 'success');
+            }
+            
+            // 初始绘制
+            drawScatter('hp', 'price');
+            
+            // 绑定控件
+            d3.select('#xAxisSelect').on('change', function() {
+                drawScatter(this.value, d3.select('#yAxisSelect').property('value'));
+            });
+            
+            d3.select('#yAxisSelect').on('change', function() {
+                drawScatter(d3.select('#xAxisSelect').property('value'), this.value);
+            });
+            
+            log('Ready!', 'success');
+            
+        }).catch(error => {
+            log('ERROR loading CSV: ' + error.message, 'error');
+            console.error(error);
+        });
+    </script>
+</body>
+</html>
